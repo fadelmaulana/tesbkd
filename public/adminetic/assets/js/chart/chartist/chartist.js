@@ -862,12 +862,12 @@ var Chartist = {
     var hasAxis = !!(options.axisX || options.axisY);
     var yAxisOffset = hasAxis ? options.axisY.offset : 0;
     var xAxisOffset = hasAxis ? options.axisX.offset : 0;
-    // If width or height results in invalid value (including 0) we fallback to the unitless unors or even 0
+    // If width or height results in invalid value (including 0) we fallback to the unitless settings or even 0
     var width = svg.width() || Chartist.quantity(options.width).value || 0;
     var height = svg.height() || Chartist.quantity(options.height).value || 0;
     var normalizedPadding = Chartist.normalizePadding(options.chartPadding, fallbackPadding);
 
-    // If unors were to small to cope with offset (legacy) and padding, we'll adjust
+    // If settings were to small to cope with offset (legacy) and padding, we'll adjust
     width = Math.max(width, yAxisOffset + normalizedPadding.left + normalizedPadding.right);
     height = Math.max(height, xAxisOffset + normalizedPadding.top + normalizedPadding.bottom);
 
@@ -3089,14 +3089,14 @@ var Chartist = {
 /**
  * The auto scale axis uses standard linear scale projection of values along an axis. It uses order of magnitude to find a scale automatically and evaluates the available space in order to find the perfect amount of ticks for your chart.
  * **Options**
- * The following options are used by this axis in addition to the default axis options outlined in the axis configuration of the chart default unors.
+ * The following options are used by this axis in addition to the default axis options outlined in the axis configuration of the chart default settings.
  * ```javascript
  * var options = {
  *   // If high is specified then the axis will display values explicitly up to this value and the computed maximum from the data is ignored
  *   high: 100,
  *   // If low is specified then the axis will display values explicitly down to this value and the computed minimum from the data is ignored
  *   low: 0,
- *   // This option will be used when finding the right scale division unors. The amount of ticks on the scale will be determined so that as many ticks as possible will be displayed, while not violating this minimum required space (in pixel).
+ *   // This option will be used when finding the right scale division settings. The amount of ticks on the scale will be determined so that as many ticks as possible will be displayed, while not violating this minimum required space (in pixel).
  *   scaleMinSpace: 20,
  *   // Can be set to true or false. If set to true, the scale will be generated with whole numbers only.
  *   onlyInteger: true,
@@ -3140,7 +3140,7 @@ var Chartist = {
 /**
  * The fixed scale axis uses standard linear projection of values along an axis. It makes use of a divisor option to divide the range provided from the minimum and maximum value or the options high and low that will override the computed minimum and maximum.
  * **Options**
- * The following options are used by this axis in addition to the default axis options outlined in the axis configuration of the chart default unors.
+ * The following options are used by this axis in addition to the default axis options outlined in the axis configuration of the chart default settings.
  * ```javascript
  * var options = {
  *   // If high is specified then the axis will display values explicitly up to this value and the computed maximum from the data is ignored
@@ -3196,7 +3196,7 @@ var Chartist = {
 /**
  * The step axis for step based charts like bar chart or step based line charts. It uses a fixed amount of ticks that will be equally distributed across the whole axis length. The projection is done using the index of the data value rather than the value itself and therefore it's only useful for distribution purpose.
  * **Options**
- * The following options are used by this axis in addition to the default axis options outlined in the axis configuration of the chart default unors.
+ * The following options are used by this axis in addition to the default axis options outlined in the axis configuration of the chart default settings.
  * ```javascript
  * var options = {
  *   // Ticks to be used to distribute across the axis length. As this axis type relies on the index of the value rather than the value, arbitrary data that can be converted to a string can be used as ticks.
@@ -3731,7 +3731,7 @@ var Chartist = {
     // If set to 'overlap' this property will force the stacked bars to draw from the zero line.
     // If set to 'accumulate' this property will form a total for each series point. This will also influence the y-axis and the overall bounds of the chart. In stacked mode the seriesBarDistance property will have no effect.
     stackMode: 'accumulate',
-    // Inverts the axes of the bar chart in order to draw a horizontal bar chart. Be aware that you also need to invert your axis unors as the Y Axis will now display the labels and the X Axis the values.
+    // Inverts the axes of the bar chart in order to draw a horizontal bar chart. Be aware that you also need to invert your axis settings as the Y Axis will now display the labels and the X Axis the values.
     horizontalBars: false,
     // If set to true then each bar will represent a series and the data array is expected to be a one dimensional array of data values rather than a series array of series. This is useful if the bar chart should represent a profile rather than some data over time.
     distributeSeries: false,
@@ -3808,7 +3808,7 @@ var Chartist = {
       highLow = Chartist.getHighLow(data.normalized.series, options, options.horizontalBars ? 'x' : 'y');
     }
 
-    // Overrides of high / low from unors
+    // Overrides of high / low from settings
     highLow.high = +options.high || (options.high === 0 ? 0 : highLow.high);
     highLow.low = +options.low || (options.low === 0 ? 0 : highLow.low);
 
@@ -3832,7 +3832,7 @@ var Chartist = {
       labelAxisTicks = data.normalized.labels;
     }
 
-    // Set labelAxis and valueAxis based on the horizontalBars unor. This unor will flip the axes if necessary.
+    // Set labelAxis and valueAxis based on the horizontalBars setting. This setting will flip the axes if necessary.
     if(options.horizontalBars) {
       if(options.axisX.type === undefined) {
         valueAxis = axisX = new Chartist.AutoScaleAxis(Chartist.Axis.units.x, data.normalized.series, chartRect, Chartist.extend({}, options.axisX, {
@@ -4141,7 +4141,7 @@ var Chartist = {
     labelPosition: 'inside',
     // An interpolation function for the label value
     labelInterpolationFnc: Chartist.noop,
-    // Label direction can be 'neutral', 'explode' or 'implode'. The labels anchor will be positioned based on those unors as well as the fact if the labels are on the right or left side of the center of the chart. Usually explode is useful when labels are positioned far away from the center.
+    // Label direction can be 'neutral', 'explode' or 'implode'. The labels anchor will be positioned based on those settings as well as the fact if the labels are on the right or left side of the center of the chart. Usually explode is useful when labels are positioned far away from the center.
     labelDirection: 'neutral',
     // If true the whole data is reversed including labels, the series order as well as the whole series data arrays.
     reverseData: false,

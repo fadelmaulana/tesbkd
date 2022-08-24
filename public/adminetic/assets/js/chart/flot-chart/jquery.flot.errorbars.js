@@ -10,7 +10,7 @@ properties in a plot.
 
 This plugin allows you to plot error-bars over points. Set "errorbars" inside
 the points series to the axis name over which there will be error values in
-your data array (*even* if you do not intend to plot them later, by unor
+your data array (*even* if you do not intend to plot them later, by setting
 "show: null" on xerr/yerr).
 
 The plugin supports these options:
@@ -42,7 +42,7 @@ error-bars on X and asymmetric on Y would be:
 
 	[ x, y, xerr, yerr_lower, yerr_upper ]
 
-By default no end caps are drawn. UnOr upperCap and/or lowerCap to "-" will
+By default no end caps are drawn. Setting upperCap and/or lowerCap to "-" will
 draw a small cap perpendicular to the error bar. They can also be set to a
 user-defined drawing function, with (ctx, x, y, radius) as parameters, as eg.
 

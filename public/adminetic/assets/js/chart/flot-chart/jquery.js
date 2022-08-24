@@ -1477,7 +1477,7 @@ jQuery.support = (function() {
 
 		if ( typeof div.style.zoom !== "undefined" ) {
 			// Check if natively block-level elements act like inline-block
-			// elements when unor their display to 'inline' and giving
+			// elements when setting their display to 'inline' and giving
 			// them layout
 			// (IE < 8 does this)
 			div.innerHTML = "";
@@ -2198,7 +2198,7 @@ jQuery.fn.extend({
 
 			hooks = jQuery.valHooks[ this.type ] || jQuery.valHooks[ this.nodeName.toLowerCase() ];
 
-			// If set returns undefined, fall back to normal unor
+			// If set returns undefined, fall back to normal setting
 			if ( !hooks || !("set" in hooks) || hooks.set( this, val, "value" ) === undefined ) {
 				this.value = val;
 			}
@@ -2342,7 +2342,7 @@ jQuery.extend({
 					propName = jQuery.propFix[ name ] || name;
 					isBool = rboolean.test( name );
 
-					// See #9699 for explanation of this approach (unor first, then removal)
+					// See #9699 for explanation of this approach (setting first, then removal)
 					// Do not do this for boolean attributes (see #10870)
 					if ( !isBool ) {
 						jQuery.attr( elem, name, "" );
@@ -2365,7 +2365,7 @@ jQuery.extend({
 				if ( rtype.test( elem.nodeName ) && elem.parentNode ) {
 					jQuery.error( "type property can't be changed" );
 				} else if ( !jQuery.support.radioValue && value === "radio" && jQuery.nodeName(elem, "input") ) {
-					// UnOr the type on a radio button after the value resets the value in IE6-9
+					// Setting the type on a radio button after the value resets the value in IE6-9
 					// Reset value to it's default in case type is set after value
 					// This is for element creation
 					var val = elem.value;
@@ -2452,7 +2452,7 @@ jQuery.extend({
 		tabIndex: {
 			get: function( elem ) {
 				// elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set
-				// http://fluidproject.org/blog/2008/01/09/getting-unor-and-removing-tabindex-values-with-javascript/
+				// http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
 				var attributeNode = elem.getAttributeNode("tabindex");
 
 				return attributeNode && attributeNode.specified ?
@@ -2496,7 +2496,7 @@ boolHook = {
 	}
 };
 
-// IE6/7 do not support getting/unor some attributes with get/setAttribute
+// IE6/7 do not support getting/setting some attributes with get/setAttribute
 if ( !getSetAttribute ) {
 
 	fixSpecified = {
@@ -2540,7 +2540,7 @@ if ( !getSetAttribute ) {
 	});
 
 	// Set contenteditable to false on removals(#10429)
-	// UnOr to empty string throws an error as an invalid value
+	// Setting to empty string throws an error as an invalid value
 	jQuery.attrHooks.contenteditable = {
 		get: nodeHook.get,
 		set: function( elem, value, name ) {
@@ -5200,7 +5200,7 @@ if ( document.querySelectorAll ) {
 		assert(function( div ) {
 			// Select is set to empty string on purpose
 			// This is to test IE's treatment of not explictly
-			// unor a boolean content attribute,
+			// setting a boolean content attribute,
 			// since its presence should be enough
 			// http://bugs.jquery.com/ticket/12359
 			div.innerHTML = "<select><option selected=''></option></select>";
@@ -6106,7 +6106,7 @@ function cloneFixAttributes( src, dest ) {
 
 		dest.defaultChecked = dest.checked = src.checked;
 
-		// IE6-7 get confused and end up unor the value of a cloned
+		// IE6-7 get confused and end up setting the value of a cloned
 		// checkbox/radio button to an empty string instead of "on"
 		if ( dest.value !== src.value ) {
 			dest.value = src.value;
@@ -6669,7 +6669,7 @@ jQuery.fn.extend({
 
 jQuery.extend({
 	// Add in style property hooks for overriding the default
-	// behavior of getting and unor a style property
+	// behavior of getting and setting a style property
 	cssHooks: {
 		opacity: {
 			get: function( elem, computed ) {
@@ -6696,7 +6696,7 @@ jQuery.extend({
 	},
 
 	// Add in properties whose names you wish to fix before
-	// unor or getting the value
+	// setting or getting the value
 	cssProps: {
 		// normalize float css property
 		"float": jQuery.support.cssFloat ? "cssFloat" : "styleFloat"
@@ -6720,7 +6720,7 @@ jQuery.extend({
 		// followed by the unprefixed version
 		hooks = jQuery.cssHooks[ name ] || jQuery.cssHooks[ origName ];
 
-		// Check if we're unor a value
+		// Check if we're setting a value
 		if ( value !== undefined ) {
 			type = typeof value;
 
@@ -6860,7 +6860,7 @@ if ( window.getComputedStyle ) {
 			ret = elem.currentStyle && elem.currentStyle[ name ],
 			style = elem.style;
 
-		// Avoid unor ret to empty string here
+		// Avoid setting ret to empty string here
 		// so we don't default to auto
 		if ( ret == null && style && style[ name ] ) {
 			ret = style[ name ];
@@ -7076,14 +7076,14 @@ if ( !jQuery.support.opacity ) {
 				filter = currentStyle && currentStyle.filter || style.filter || "";
 
 			// IE has trouble with opacity if it does not have layout
-			// Force it by unor the zoom level
+			// Force it by setting the zoom level
 			style.zoom = 1;
 
-			// if unor opacity to 1, and no other filters exist - attempt to remove filter attribute #6652
+			// if setting opacity to 1, and no other filters exist - attempt to remove filter attribute #6652
 			if ( value >= 1 && jQuery.trim( filter.replace( ralpha, "" ) ) === "" &&
 				style.removeAttribute ) {
 
-				// UnOr style.filter to null, "" & " " still leave "filter:" in the cssText
+				// Setting style.filter to null, "" & " " still leave "filter:" in the cssText
 				// if "filter:" is present at all, clearType is disabled, we want to avoid this
 				// style.removeAttribute is IE Only, but so apparently is this code path...
 				style.removeAttribute( "filter" );
@@ -7109,7 +7109,7 @@ jQuery(function() {
 		jQuery.cssHooks.marginRight = {
 			get: function( elem, computed ) {
 				// WebKit Bug 13343 - getComputedStyle returns wrong value for margin-right
-				// Work around by temporarily unor element display to inline-block
+				// Work around by temporarily setting element display to inline-block
 				return jQuery.swap( elem, { "display": "inline-block" }, function() {
 					if ( computed ) {
 						return curCSS( elem, "marginRight" );
@@ -7221,7 +7221,7 @@ jQuery.param = function( a, traditional ) {
 
 	// Set traditional to true for jQuery <= 1.3.2 behavior.
 	if ( traditional === undefined ) {
-		traditional = jQuery.ajaxUnOrs && jQuery.ajaxUnOrs.traditional;
+		traditional = jQuery.ajaxSettings && jQuery.ajaxSettings.traditional;
 	}
 
 	// If an array was passed in, assume that it is an array of form elements.
@@ -7410,7 +7410,7 @@ function inspectPrefiltersOrTransports( structure, options, originalOptions, jqX
 // Fixes #9887
 function ajaxExtend( target, src ) {
 	var key, deep,
-		flatOptions = jQuery.ajaxUnOrs.flatOptions || {};
+		flatOptions = jQuery.ajaxSettings.flatOptions || {};
 	for ( key in src ) {
 		if ( src[ key ] !== undefined ) {
 			( flatOptions[ key ] ? target : ( deep || ( deep = {} ) ) )[ key ] = src[ key ];
@@ -7527,23 +7527,23 @@ jQuery.extend({
 		return jQuery.get( url, data, callback, "json" );
 	},
 
-	// Creates a full fledged unors object into target
-	// with both ajaxUnOrs and unors fields.
-	// If target is omitted, writes into ajaxUnOrs.
-	ajaxSetup: function( target, unors ) {
-		if ( unors ) {
-			// Building a unors object
-			ajaxExtend( target, jQuery.ajaxUnOrs );
+	// Creates a full fledged settings object into target
+	// with both ajaxSettings and settings fields.
+	// If target is omitted, writes into ajaxSettings.
+	ajaxSetup: function( target, settings ) {
+		if ( settings ) {
+			// Building a settings object
+			ajaxExtend( target, jQuery.ajaxSettings );
 		} else {
-			// Extending ajaxUnOrs
-			unors = target;
-			target = jQuery.ajaxUnOrs;
+			// Extending ajaxSettings
+			settings = target;
+			target = jQuery.ajaxSettings;
 		}
-		ajaxExtend( target, unors );
+		ajaxExtend( target, settings );
 		return target;
 	},
 
-	ajaxUnOrs: {
+	ajaxSettings: {
 		url: ajaxLocation,
 		isLocal: rlocalProtocol.test( ajaxLocParts[ 1 ] ),
 		global: true,
@@ -8163,7 +8163,7 @@ var oldCallbacks = [],
 	rjsonp = /(=)\?(?=&|$)|\?\?/,
 	nonce = jQuery.now();
 
-// Default jsonp unors
+// Default jsonp settings
 jQuery.ajaxSetup({
 	jsonp: "callback",
 	jsonpCallback: function() {
@@ -8174,7 +8174,7 @@ jQuery.ajaxSetup({
 });
 
 // Detect, normalize options and install callbacks for jsonp requests
-jQuery.ajaxPrefilter( "json jsonp", function( s, originalUnOrs, jqXHR ) {
+jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 
 	var callbackName, overwritten, responseContainer,
 		data = s.data,
@@ -8227,7 +8227,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalUnOrs, jqXHR ) {
 			// Save back as free
 			if ( s[ callbackName ] ) {
 				// make sure that re-using the options doesn't screw things around
-				s.jsonpCallback = originalUnOrs.jsonpCallback;
+				s.jsonpCallback = originalSettings.jsonpCallback;
 
 				// save the callback name for future use
 				oldCallbacks.push( callbackName );
@@ -8354,8 +8354,8 @@ function createActiveXHR() {
 }
 
 // Create the request object
-// (This is still attached to ajaxUnOrs for backward compatibility)
-jQuery.ajaxUnOrs.xhr = window.ActiveXObject ?
+// (This is still attached to ajaxSettings for backward compatibility)
+jQuery.ajaxSettings.xhr = window.ActiveXObject ?
 	/* Microsoft failed to properly
 	 * implement the XMLHttpRequest in IE7 (can't request local files),
 	 * so we use the ActiveXObject when it is available
@@ -8374,7 +8374,7 @@ jQuery.ajaxUnOrs.xhr = window.ActiveXObject ?
 		ajax: !!xhr,
 		cors: !!xhr && ( "withCredentials" in xhr )
 	});
-})( jQuery.ajaxUnOrs.xhr() );
+})( jQuery.ajaxSettings.xhr() );
 
 // Create transport if the browser can provide an xhr
 if ( jQuery.support.ajax ) {
@@ -8996,7 +8996,7 @@ Tween.propHooks = {
 };
 
 // Remove in 2.0 - this supports IE8's panic based approach
-// to unor things on disconnected nodes
+// to setting things on disconnected nodes
 
 Tween.propHooks.scrollTop = Tween.propHooks.scrollLeft = {
 	set: function( tween ) {
@@ -9020,7 +9020,7 @@ jQuery.each([ "toggle", "show", "hide" ], function( i, name ) {
 jQuery.fn.extend({
 	fadeTo: function( speed, to, easing, callback ) {
 
-		// show any hidden elements after unor opacity to 0
+		// show any hidden elements after setting opacity to 0
 		return this.filter( isHidden ).css( "opacity", 0 ).show()
 
 			// animate to the value specified

@@ -16508,7 +16508,7 @@ p.data-attributes svg {
   transform: rotate(45deg);
   margin-left: -3px;
 }
-.date-picker-unor {
+.date-picker-setting {
   background-color: rgba(115, 102, 255, 0.1);
   width: 35px;
   height: 35px;
@@ -16523,7 +16523,7 @@ p.data-attributes svg {
   justify-content: center;
   border-radius: 50px;
 }
-.date-picker-unor i {
+.date-picker-setting i {
   color: var(--theme-deafult);
 }
 .default-datepicker .datepicker-inline .datepicker {
@@ -18490,14 +18490,14 @@ footer.blockquote-footer {
 .grid-options ul li a .line-grid-15 {
   left: 133px;
 }
-.square-product-unor {
+.square-product-setting {
   height: 36px;
   vertical-align: middle;
 }
-.square-product-unor a {
+.square-product-setting a {
   color: #2b2b2b;
 }
-.square-product-unor .icon-grid {
+.square-product-setting .icon-grid {
   padding: 7px;
   background-color: #fff;
   display: -webkit-box;
@@ -18508,7 +18508,7 @@ footer.blockquote-footer {
   align-items: center;
   margin: 0 10px;
 }
-.square-product-unor .icon-grid svg {
+.square-product-setting .icon-grid svg {
   width: 20px;
   height: 20px;
 }
@@ -26307,7 +26307,7 @@ body.dark-only .mega-horizontal.offer-style .card,
 body.dark-only .mega-vertical.offer-style .card {
   border: 1px dashed #374558 !important;
 }
-body.dark-only .unor-dot .unor-bg {
+body.dark-only .setting-dot .setting-bg {
   background-color: var(--theme-secondary);
 }
 body.dark-only .bookmark.pull-right {
@@ -26454,10 +26454,10 @@ body.dark-only .slider-product {
   border-top: 1px solid #1d1e26;
   border-bottom: 1px solid #1d1e26;
 }
-body.dark-only .square-product-unor .icon-grid {
+body.dark-only .square-product-setting .icon-grid {
   background-color: #262932;
 }
-body.dark-only .square-product-unor .icon-grid svg {
+body.dark-only .square-product-setting .icon-grid svg {
   color: rgba(255, 255, 255, 0.6);
 }
 body.dark-only .active-order-table table thead tr th,
@@ -37935,7 +37935,7 @@ body[class*="dark-"] .for-light {
   left: -14px;
 }
 .customizer-contain .customizer-body .sidebar-type > li,
-.customizer-contain .customizer-body .sidebar-unor > li {
+.customizer-contain .customizer-body .sidebar-setting > li {
   height: 70px;
   width: 85px;
   border: 1px solid #f4f4f4;
@@ -37943,7 +37943,7 @@ body[class*="dark-"] .for-light {
   display: inline-block;
 }
 .customizer-contain .customizer-body .sidebar-type > li + li,
-.customizer-contain .customizer-body .sidebar-unor > li + li {
+.customizer-contain .customizer-body .sidebar-setting > li + li {
   margin-left: 7px;
 }
 .customizer-contain

@@ -162,7 +162,7 @@ return [
     | HTTPS Only Cookies
     |--------------------------------------------------------------------------
     |
-    | By unor this option to true, session cookies will only be sent back
+    | By setting this option to true, session cookies will only be sent back
     | to the server if the browser has a HTTPS connection. This will keep
     | the cookie from being sent to you when it can't be done securely.
     |
@@ -175,7 +175,7 @@ return [
     | HTTP Access Only
     |--------------------------------------------------------------------------
     |
-    | UnOr this value to true will prevent JavaScript from accessing the
+    | Setting this value to true will prevent JavaScript from accessing the
     | value of the cookie and the cookie will only be accessible through
     | the HTTP protocol. You are free to modify this option if needed.
     |

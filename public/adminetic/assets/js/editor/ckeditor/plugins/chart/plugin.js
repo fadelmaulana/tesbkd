@@ -66,7 +66,7 @@
 
 			// A little bit of magic to support "Preview" feature in CKEditor (in a popup).
 			// In order to transform downcasted widgets into nice charts we need to:
-			// 1. Pass color unors and charts configuration through JSON.
+			// 1. Pass color settings and charts configuration through JSON.
 			// 2. Load the Chart.js library
 			// 3. Load a helper script that will "upcast" widgets and initiate charts.
 			editor.on( 'contentPreview', function( evt ) {
@@ -365,7 +365,7 @@
 					setTimeout( function() { renderChart( canvas, data, legend ) }, 0 );
 				},
 
-				// ACF unors. Without allowing elements introduced by this plugin, CKEditor built-in filter would remove it.
+				// ACF settings. Without allowing elements introduced by this plugin, CKEditor built-in filter would remove it.
 				allowedContent: 'div(!chartjs)[data-*];',
 				requiredContent: 'div(chartjs)[data-chart-value,data-chart,data-chart-height]',
 

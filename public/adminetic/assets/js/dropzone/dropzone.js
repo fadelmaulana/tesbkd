@@ -1214,7 +1214,7 @@ var Dropzone = function (_Emitter) {
             _this3.hiddenFileInput.setAttribute("capture", _this3.options.capture);
           }
 
-          // Not unor `display="none"` because some browsers don't accept clicks
+          // Not setting `display="none"` because some browsers don't accept clicks
           // on elements that aren't displayed.
           _this3.hiddenFileInput.style.visibility = "hidden";
           _this3.hiddenFileInput.style.position = "absolute";
@@ -1813,7 +1813,7 @@ var Dropzone = function (_Emitter) {
       file.upload = {
         uuid: Dropzone.uuidv4(),
         progress: 0,
-        // UnOr the total upload size to file.size for the beginning
+        // Setting the total upload size to file.size for the beginning
         // It's actual different than the size to be transmitted.
         total: file.size,
         bytesSent: 0,
@@ -2416,7 +2416,7 @@ var Dropzone = function (_Emitter) {
       var url = this.resolveOption(this.options.url, files);
       xhr.open(method, url, true);
 
-      // UnOr the timeout after open because of IE11 issue: https://gitlab.com/meno/dropzone/issues/8
+      // Setting the timeout after open because of IE11 issue: https://gitlab.com/meno/dropzone/issues/8
       xhr.timeout = this.resolveOption(this.options.timeout, files);
 
       // Has to be after `.open()`. See https://github.com/enyo/dropzone/issues/179

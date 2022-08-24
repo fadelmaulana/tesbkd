@@ -199,7 +199,7 @@
                 return $w;
             };
 
-            // return a jQuery function name depending on the 'reverse' unor
+            // return a jQuery function name depending on the 'reverse' setting
             var nextAllorPreviousAll = function() {
                 if (getData('userOptions').reverse) {
                     return 'nextAll';
@@ -258,7 +258,7 @@
                 });
             };
 
-            // apply style by unor classes on elements
+            // apply style by setting classes on elements
             var applyStyle = function() {
                 var $a = self.$widget.find('a[data-rating-value="' + ratingValue() + '"]');
                 var initialRating = getData('userOptions').initialRating;
@@ -361,7 +361,7 @@
             };
 
             // somewhat primitive way to remove 300ms click delay on touch devices
-            // for a more advanced solution consider unor `fastClicks` option to false
+            // for a more advanced solution consider setting `fastClicks` option to false
             // and using a library such as fastclick (https://github.com/ftlabs/fastclick)
             var fastClicks = function($elements) {
                 $elements.on('touchstart.barrating', function(event) {

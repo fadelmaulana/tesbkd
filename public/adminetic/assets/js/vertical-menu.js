@@ -1167,7 +1167,7 @@
 		});
 	};
 
-	// default unors
+	// default settings
 	$.fn.smartmenus.defaults = {
 		isPopup:		false,		// is this a popup menu (can be shown via the popupShow/popupHide methods) or a permanent menu bar
 		mainMenuSubOffsetX:	0,		// pixels offset from default position

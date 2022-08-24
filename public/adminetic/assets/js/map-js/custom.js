@@ -1,4 +1,4 @@
-// Common unors
+// Common settings
 var platform = new H.service.Platform({
   app_id: 'devportal-demo-20180625',
   app_code: '9v2BkviRwi9Ot26kp2IysQ',
@@ -48,7 +48,7 @@ function switchMapLanguage(map, platform){
     );
   map.setBaseLayer(chineseMapLayer);
   var ui = H.ui.UI.createDefault(map, defaultLayers, 'zh-CN');
-  ui.removeControl('mapunors');
+  ui.removeControl('mapsettings');
 }
 var map = new H.Map(document.getElementById('map3'),
   defaultLayers.normal.map,{
@@ -81,7 +81,7 @@ var map = new H.Map(document.getElementById('map4'),
 });
 var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 var ui = H.ui.UI.createDefault(map, defaultLayers);
-ui.removeControl('mapunors');
+ui.removeControl('mapsettings');
 switchMapType(map, platform);
 
 // map5
@@ -294,7 +294,7 @@ function drawGroundTrack(x, t, zoom, radius, ctx, projection, screenCenter) {
     }
     y = radius * Math.sin(omega * t + PHI);
     x -= Math.pow(2, zoom);
-    pX = x - projection.x + screenCenter.x; 
+    pX = x - projection.x + screenCenter.x;
     pY = y + (projection.w / 2) - projection.y + screenCenter.y;
     ctx.lineTo(pX, pY);
     t -= 0.007;
@@ -318,7 +318,7 @@ function renderCallback(ctx, renderParams) {
   }
   x += Math.pow(2, zoom);
   y = radius * Math.sin(omega * t + PHI);
-  pX = x - projection.x + screenCenter.x; 
+  pX = x - projection.x + screenCenter.x;
   pY = y + (projection.w / 2) - projection.y + screenCenter.y;
   ctx.moveTo(pX - 10, pY - 10);
   ctx.lineTo(pX + 10, pY + 10);
@@ -349,7 +349,7 @@ var map = new H.Map(document.getElementById('map11'),
 });
 var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 var ui = H.ui.UI.createDefault(map, defaultLayers);
-ui.removeControl('mapunors');
+ui.removeControl('mapsettings');
 addCanvasOverlay(map, platform);
 
 // map12

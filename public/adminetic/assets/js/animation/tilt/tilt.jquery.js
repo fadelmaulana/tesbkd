@@ -29,18 +29,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             var _this = this;
             $(this).on('mousemove', mouseMove);
             $(this).on('mouseenter', mouseEnter);
-            if (this.unors.reset) $(this).on('mouseleave', mouseLeave);
-            if (this.unors.glare) $(window).on('resize', updateGlareSize.bind(_this));
+            if (this.settings.reset) $(this).on('mouseleave', mouseLeave);
+            if (this.settings.glare) $(window).on('resize', updateGlareSize.bind(_this));
         };
         var setTransition = function setTransition() {
             var _this2 = this;
             if (this.timeout !== undefined) clearTimeout(this.timeout);
-            $(this).css({ 'transition': this.unors.speed + 'ms ' + this.unors.easing });
-            if (this.unors.glare) this.glareElement.css({ 'transition': 'opacity ' + this.unors.speed + 'ms ' + this.unors.easing });
+            $(this).css({ 'transition': this.settings.speed + 'ms ' + this.settings.easing });
+            if (this.settings.glare) this.glareElement.css({ 'transition': 'opacity ' + this.settings.speed + 'ms ' + this.settings.easing });
             this.timeout = setTimeout(function () {
                 $(_this2).css({ 'transition': '' });
-                if (_this2.unors.glare) _this2.glareElement.css({ 'transition': '' });
-            }, this.unors.speed);
+                if (_this2.settings.glare) _this2.glareElement.css({ 'transition': '' });
+            }, this.settings.speed);
         };
         var mouseEnter = function mouseEnter(event) {
             this.ticking = false;
@@ -74,8 +74,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             var top = $(this).offset().top;
             var percentageX = (this.mousePositions.x - left) / width;
             var percentageY = (this.mousePositions.y - top) / height;
-            var tiltX = (this.unors.maxTilt / 2 - percentageX * this.unors.maxTilt).toFixed(2);
-            var tiltY = (percentageY * this.unors.maxTilt - this.unors.maxTilt / 2).toFixed(2);
+            var tiltX = (this.settings.maxTilt / 2 - percentageX * this.settings.maxTilt).toFixed(2);
+            var tiltY = (percentageY * this.settings.maxTilt - this.settings.maxTilt / 2).toFixed(2);
             var angle = Math.atan2(this.mousePositions.x - (left + width / 2), -(this.mousePositions.y - (top + height / 2))) * (180 / Math.PI);
             return { tiltX: tiltX, tiltY: tiltY, 'percentageX': percentageX * 100, 'percentageY': percentageY * 100, angle: angle };
         };
@@ -83,24 +83,24 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             this.transforms = getValues.call(this);
             if (this.reset) {
                 this.reset = false;
-                $(this).css('transform', 'perspective(' + this.unors.perspective + 'px) rotateX(0deg) rotateY(0deg)');
-                if (this.unors.glare) {
+                $(this).css('transform', 'perspective(' + this.settings.perspective + 'px) rotateX(0deg) rotateY(0deg)');
+                if (this.settings.glare) {
                     this.glareElement.css('transform', 'rotate(180deg) translate(-50%, -50%)');
                     this.glareElement.css('opacity', '0');
                 }
                 return;
             } else {
-                $(this).css('transform', 'perspective(' + this.unors.perspective + 'px) rotateX(' + (this.unors.disableAxis === 'x' ? 0 : this.transforms.tiltY) + 'deg) rotateY(' + (this.unors.disableAxis === 'y' ? 0 : this.transforms.tiltX) + 'deg) scale3d(' + this.unors.scale + ',' + this.unors.scale + ',' + this.unors.scale + ')');
-                if (this.unors.glare) {
+                $(this).css('transform', 'perspective(' + this.settings.perspective + 'px) rotateX(' + (this.settings.disableAxis === 'x' ? 0 : this.transforms.tiltY) + 'deg) rotateY(' + (this.settings.disableAxis === 'y' ? 0 : this.transforms.tiltX) + 'deg) scale3d(' + this.settings.scale + ',' + this.settings.scale + ',' + this.settings.scale + ')');
+                if (this.settings.glare) {
                     this.glareElement.css('transform', 'rotate(' + this.transforms.angle + 'deg) translate(-50%, -50%)');
-                    this.glareElement.css('opacity', '' + this.transforms.percentageY * this.unors.maxGlare / 100);
+                    this.glareElement.css('opacity', '' + this.transforms.percentageY * this.settings.maxGlare / 100);
                 }
             }
             $(this).trigger("change", [this.transforms]);
             this.ticking = false;
         };
         var prepareGlare = function prepareGlare() {
-            var glarePrerender = this.unors.glarePrerender;
+            var glarePrerender = this.settings.glarePrerender;
             if (!glarePrerender)
                 $(this).append('<div class="js-tilt-glare"><div class="js-tilt-glare-inner"></div></div>');
             this.glareElementWrapper = $(this).find(".js-tilt-glare");
@@ -155,16 +155,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 var _this3 = this;
 
                 this.mousePositions = getMousePositions.call(this);
-                this.unors = $(this).data('unors');
+                this.settings = $(this).data('settings');
                 mouseLeave.call(this);
                 setTimeout(function () {
                     _this3.reset = false;
-                }, this.unors.transition);
+                }, this.settings.transition);
             });
         };
         return this.each(function () {
             var _this4 = this;
-            this.unors = $.extend({
+            this.settings = $.extend({
                 maxTilt: $(this).is('[data-tilt-max]') ? $(this).data('tilt-max') : 20,
                 perspective: $(this).is('[data-tilt-perspective]') ? $(this).data('tilt-perspective') : 300,
                 easing: $(this).is('[data-tilt-easing]') ? $(this).data('tilt-easing') : 'cubic-bezier(.03,.98,.52,.99)',
@@ -177,12 +177,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 glare: $(this).is('[data-tilt-glare]') ? $(this).data('tilt-glare') : false,
                 maxGlare: $(this).is('[data-tilt-maxglare]') ? $(this).data('tilt-maxglare') : 1
             }, options);
-            if (this.unors.axis !== null) {
-                this.unors.disableAxis = this.unors.axis;
+            if (this.settings.axis !== null) {
+                this.settings.disableAxis = this.settings.axis;
             }
             this.init = function () {
-                $(_this4).data('unors', _this4.unors);
-                if (_this4.unors.glare) prepareGlare.call(_this4);
+                $(_this4).data('settings', _this4.settings);
+                if (_this4.settings.glare) prepareGlare.call(_this4);
                 bindEvents.call(_this4);
             };
             this.init();

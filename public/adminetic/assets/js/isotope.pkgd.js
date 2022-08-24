@@ -1419,7 +1419,7 @@ function Outlayer( element, options ) {
   }
 }
 
-// unors are for internal use only
+// settings are for internal use only
 Outlayer.namespace = 'outlayer';
 Outlayer.Item = Item;
 

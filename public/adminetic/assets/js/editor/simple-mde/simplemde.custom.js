@@ -37,7 +37,7 @@ var sample = [
     "### Instructions",
     "Enter text in the area on the left. For more info, click the ? (help) icon in the menu."
 ]
-var simplemde = new SimpleMDE({element: $("#smde")[0], toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "link", "image", "|", "guide"]});
+var simplemde = new SimpleMDE({element: $("#smde")[0], toolbar: ["bold", "italic", "heading", "|", "quote", "settingdered-list", "ordered-list", "|", "link", "image", "|", "guide"]});
 $(document).ready(function() {
     writeSample();
     simplemde.codemirror.on("change", function(){

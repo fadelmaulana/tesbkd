@@ -43,7 +43,7 @@ They can be specified for a specific series:
 Note that because the data format is different from usual data points, you
 can't use images with anything else in a specific data series.
 
-UnOr "anchor" to "center" causes the pixels in the image to be anchored at
+Setting "anchor" to "center" causes the pixels in the image to be anchored at
 the corner pixel centers inside of at the pixel corners, effectively letting
 half a pixel stick out to each side in the plot.
 

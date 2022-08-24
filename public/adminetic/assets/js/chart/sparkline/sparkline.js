@@ -70,7 +70,7 @@
 * as there's a slight performance overhead:
 *   $('.sparkline').sparkline([1,2,3,4], {enableTagOptions: true})
 *   <p>Sparkline: <span class="sparkline" sparkType="bar" sparkBarColor="red">loading</span></p>
-* Prefix all options supplied as tag attribute with "spark" (configurable by unor tagOptionPrefix)
+* Prefix all options supplied as tag attribute with "spark" (configurable by setting tagOptionPrefix)
 *
 * Supported options:
 *   lineColor - Color of the line used for the chart
@@ -102,7 +102,7 @@
 *   tooltipOffsetY - How many pixels away from the mouse pointer to render the tooltip on the r axis
 *   tooltipFormatter  - Optional callback that allows you to override the HTML displayed in the tooltip
 *       callback is given arguments of (sparkline, options, fields)
-*   tooltipChartTitle - If specified then the tooltip uses the string specified by this unor as a title
+*   tooltipChartTitle - If specified then the tooltip uses the string specified by this setting as a title
 *   tooltipFormat - A format string or SPFormat object  (or an array thereof for multiple entries)
 *       to control the format of the tooltip
 *   tooltipPrefix - A string to prepend to each field displayed in a tooltip
@@ -221,11 +221,11 @@
         VShape, VCanvas_base, VCanvas_canvas, VCanvas_vml, pending, shapeCount = 0;
 
     /**
-     * Default configuration unors
+     * Default configuration settings
      */
     getDefaults = function () {
         return {
-            // UnOrs common to most/all chart types
+            // Settings common to most/all chart types
             common: {
                 type: 'line',
                 lineColor: '#00f',
@@ -1056,7 +1056,7 @@
             base = defaults.common;
             this.tagOptionsPrefix = userOptions.enableTagOptions && (userOptions.tagOptionsPrefix || base.tagOptionsPrefix);
 
-            tagOptionType = this.getTagUnOr('type');
+            tagOptionType = this.getTagSetting('type');
             if (tagOptionType === UNSET_OPTION) {
                 extendedOptions = defaults[userOptions.type || base.type];
             } else {
@@ -1066,7 +1066,7 @@
         },
 
 
-        getTagUnOr: function (key) {
+        getTagSetting: function (key) {
             var prefix = this.tagOptionsPrefix,
                 val, i, pairs, keyval;
             if (prefix === false || prefix === undefined) {
@@ -1099,7 +1099,7 @@
         },
 
         get: function (key, defaultval) {
-            var tagOption = this.getTagUnOr(key),
+            var tagOption = this.getTagSetting(key),
                 result;
             if (tagOption !== UNSET_OPTION) {
                 return tagOption;

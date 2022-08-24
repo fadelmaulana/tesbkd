@@ -31,23 +31,6 @@ class MyMenu implements SidebarInterface
                 ],
             ],
             [
-                'type' => 'link',
-                'name' => 'Unit Organisasi',
-                'icon' => 'fa fa-office',
-                'link' => adminRedirectRoute('unor'),
-                'is_active' => request()->routeIs('home') ? 'active' : '',
-                'conditions' => [
-                    [
-                        'type' => 'or',
-                        'condition' => auth()->user()->can('view-any', \Pratiksh\Adminetic\Models\Admin\UnOr::class),
-                    ],
-                    [
-                        'type' => 'or',
-                        'condition' => auth()->user()->can('create', \Pratiksh\Adminetic\Models\Admin\UnOr::class),
-                    ],
-                ],
-            ],
-            [
                 'type' => 'menu',
                 'name' => 'User Management',
                 'icon' => 'fa fa-users',
@@ -104,18 +87,18 @@ class MyMenu implements SidebarInterface
             ],
             [
                 'type' => 'link',
-                'name' => 'UnOr',
+                'name' => 'Setting',
                 'icon' => 'fa fa-cog',
-                'link' => adminRedirectRoute('unor'),
+                'link' => adminRedirectRoute('setting'),
                 'is_active' => request()->routeIs('home') ? 'active' : '',
                 'conditions' => [
                     [
                         'type' => 'or',
-                        'condition' => auth()->user()->can('view-any', \Pratiksh\Adminetic\Models\Admin\UnOr::class),
+                        'condition' => auth()->user()->can('view-any', \Pratiksh\Adminetic\Models\Admin\Setting::class),
                     ],
                     [
                         'type' => 'or',
-                        'condition' => auth()->user()->can('create', \Pratiksh\Adminetic\Models\Admin\UnOr::class),
+                        'condition' => auth()->user()->can('create', \Pratiksh\Adminetic\Models\Admin\Setting::class),
                     ],
                 ],
             ],

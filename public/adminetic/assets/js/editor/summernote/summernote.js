@@ -1789,7 +1789,7 @@ $$1.extend($$1.summernote.lang, {
             h6: 'Header 6'
         },
         lists: {
-            unordered: 'Unordered list',
+            settingdered: 'Unordered list',
             ordered: 'Ordered list'
         },
         options: {
@@ -1840,7 +1840,7 @@ $$1.extend($$1.summernote.lang, {
             'justifyCenter': 'Set center align',
             'justifyRight': 'Set right align',
             'justifyFull': 'Set full align',
-            'insertUnorderedList': 'Toggle unordered list',
+            'insertUnorderedList': 'Toggle settingdered list',
             'insertOrderedList': 'Toggle ordered list',
             'outdent': 'Outdent on current paragraph',
             'indent': 'Indent on current paragraph',
@@ -2881,14 +2881,14 @@ var Style = /** @class */ (function () {
             });
         }
         catch (e) { }
-        // list-style-type to list-style(unordered, ordered)
+        // list-style-type to list-style(settingdered, ordered)
         if (!rng.isOnList()) {
             styleInfo['list-style'] = 'none';
         }
         else {
             var orderedTypes = ['circle', 'disc', 'disc-leading-zero', 'square'];
             var isUnordered = $$1.inArray(styleInfo['list-style-type'], orderedTypes) > -1;
-            styleInfo['list-style'] = isUnordered ? 'unordered' : 'ordered';
+            styleInfo['list-style'] = isUnordered ? 'settingdered' : 'ordered';
         }
         var para = dom.ancestor(rng.sc, dom.isPara);
         if (para && para.style['line-height']) {
@@ -2916,7 +2916,7 @@ var Bullet = /** @class */ (function () {
         this.toggleList('OL', editable);
     };
     /**
-     * toggle unordered list
+     * toggle settingdered list
      */
     Bullet.prototype.insertUnorderedList = function (editable) {
         this.toggleList('UL', editable);
@@ -3764,7 +3764,7 @@ var Editor = /** @class */ (function () {
             })(idx);
             this.context.memo('help.formatH' + idx, this.lang.help['formatH' + idx]);
         }
-        
+
         this.insertParagraph = this.wrapCommand(function () {
             _this.typing.insertParagraph(_this.editable);
         });
@@ -3900,7 +3900,7 @@ var Editor = /** @class */ (function () {
             range.create(startPoint.node, startPoint.offset, endPoint.node, endPoint.offset).select();
         });
         /**
-         * unor color
+         * setting color
          *
          * @param {Object} sObjColor  color code
          * @param {String} sObjColor.foreColor foreground color
@@ -5314,8 +5314,8 @@ var Buttons = /** @class */ (function () {
         });
         this.context.memo('button.ul', function () {
             return _this.button({
-                contents: _this.ui.icon(_this.options.icons.unorderedlist),
-                tooltip: _this.lang.lists.unordered + _this.representShortcut('insertUnorderedList'),
+                contents: _this.ui.icon(_this.options.icons.settingderedlist),
+                tooltip: _this.lang.lists.settingdered + _this.representShortcut('insertUnorderedList'),
                 click: _this.context.createInvokeHandler('editor.insertUnorderedList')
             }).render();
         });
@@ -7313,7 +7313,7 @@ $$1.summernote = $$1.extend($$1.summernote, {
             'trash': 'note-icon-trash',
             'underline': 'note-icon-underline',
             'undo': 'note-icon-undo',
-            'unorderedlist': 'note-icon-unorderedlist',
+            'settingderedlist': 'note-icon-settingderedlist',
             'video': 'note-icon-video'
         }
     }

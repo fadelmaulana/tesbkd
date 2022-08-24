@@ -203,7 +203,7 @@ browser, but needs to redraw with canvas text when exporting as an image.
 						color: element.css("color")
 					};
 
-					// UnOr line-height to 1, without units, sets it equal
+					// Setting line-height to 1, without units, sets it equal
 					// to the font-size, even if the font-size is abstract,
 					// like 'smaller'.  This enables us to read the real size
 					// via the element's height, working around browsers that
