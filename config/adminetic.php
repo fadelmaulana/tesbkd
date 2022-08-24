@@ -7,9 +7,9 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'title' => env('APP_NAME', 'Adminetic'),
-    'prefix' => 'Admine',
-    'suffix' => 'tic',
+    'title' => env('APP_NAME', 'Tes BKD'),
+    'prefix' => 'tes',
+    'suffix' => 'bkd',
     'logo' => '',
     'favicon' => 'adminetic/static/favicon.png',
     'description' => 'Laravel Adminetic Admin Panel Upgrade.',
