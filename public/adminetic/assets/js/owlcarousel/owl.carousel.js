@@ -27,10 +27,10 @@
 	function Owl(element, options) {
 
 		/**
-		 * Current settings for the carousel.
+		 * Current unors for the carousel.
 		 * @public
 		 */
-		this.settings = null;
+		this.unors = null;
 
 		/**
 		 * Current options set by the caller including defaults.
@@ -267,26 +267,26 @@
 	 * List of workers involved in the update process.
 	 */
 	Owl.Workers = [ {
-		filter: [ 'width', 'settings' ],
+		filter: [ 'width', 'unors' ],
 		run: function() {
 			this._width = this.$element.width();
 		}
 	}, {
-		filter: [ 'width', 'items', 'settings' ],
+		filter: [ 'width', 'items', 'unors' ],
 		run: function(cache) {
 			cache.current = this._items && this._items[this.relative(this._current)];
 		}
 	}, {
-		filter: [ 'items', 'settings' ],
+		filter: [ 'items', 'unors' ],
 		run: function() {
 			this.$stage.children('.cloned').remove();
 		}
 	}, {
-		filter: [ 'width', 'items', 'settings' ],
+		filter: [ 'width', 'items', 'unors' ],
 		run: function(cache) {
-			var margin = this.settings.margin || '',
-				grid = !this.settings.autoWidth,
-				rtl = this.settings.rtl,
+			var margin = this.unors.margin || '',
+				grid = !this.unors.autoWidth,
+				rtl = this.unors.rtl,
 				css = {
 					'width': 'auto',
 					'margin-left': rtl ? margin : '',
@@ -298,12 +298,12 @@
 			cache.css = css;
 		}
 	}, {
-		filter: [ 'width', 'items', 'settings' ],
+		filter: [ 'width', 'items', 'unors' ],
 		run: function(cache) {
-			var width = (this.width() / this.settings.items).toFixed(3) - this.settings.margin,
+			var width = (this.width() / this.unors.items).toFixed(3) - this.unors.margin,
 				merge = null,
 				iterator = this._items.length,
-				grid = !this.settings.autoWidth,
+				grid = !this.unors.autoWidth,
 				widths = [];
 
 			cache.items = {
@@ -313,7 +313,7 @@
 
 			while (iterator--) {
 				merge = this._mergers[iterator];
-				merge = this.settings.mergeFit && Math.min(merge, this.settings.items) || merge;
+				merge = this.unors.mergeFit && Math.min(merge, this.unors.items) || merge;
 
 				cache.items.merge = merge > 1 || cache.items.merge;
 
@@ -323,15 +323,15 @@
 			this._widths = widths;
 		}
 	}, {
-		filter: [ 'items', 'settings' ],
+		filter: [ 'items', 'unors' ],
 		run: function() {
 			var clones = [],
 				items = this._items,
-				settings = this.settings,
+				unors = this.unors,
 			// TODO: Should be computed from number of min width items in stage
-				view = Math.max(settings.items * 2, 4),
+				view = Math.max(unors.items * 2, 4),
 				size = Math.ceil(items.length / 2) * 2,
-				repeat = settings.loop && items.length ? settings.rewind ? view : Math.max(view, size) : 0,
+				repeat = unors.loop && items.length ? unors.rewind ? view : Math.max(view, size) : 0,
 				append = '',
 				prepend = '';
 
@@ -352,9 +352,9 @@
 			$(prepend).addClass('cloned').prependTo(this.$stage);
 		}
 	}, {
-		filter: [ 'width', 'items', 'settings' ],
+		filter: [ 'width', 'items', 'unors' ],
 		run: function() {
-			var rtl = this.settings.rtl ? 1 : -1,
+			var rtl = this.unors.rtl ? 1 : -1,
 				size = this._clones.length + this._items.length,
 				iterator = -1,
 				previous = 0,
@@ -363,16 +363,16 @@
 
 			while (++iterator < size) {
 				previous = coordinates[iterator - 1] || 0;
-				current = this._widths[this.relative(iterator)] + this.settings.margin;
+				current = this._widths[this.relative(iterator)] + this.unors.margin;
 				coordinates.push(previous + current * rtl);
 			}
 
 			this._coordinates = coordinates;
 		}
 	}, {
-		filter: [ 'width', 'items', 'settings' ],
+		filter: [ 'width', 'items', 'unors' ],
 		run: function() {
-			var padding = this.settings.stagePadding,
+			var padding = this.unors.stagePadding,
 				coordinates = this._coordinates,
 				css = {
 					'width': Math.ceil(Math.abs(coordinates[coordinates.length - 1])) + padding * 2,
@@ -383,10 +383,10 @@
 			this.$stage.css(css);
 		}
 	}, {
-		filter: [ 'width', 'items', 'settings' ],
+		filter: [ 'width', 'items', 'unors' ],
 		run: function(cache) {
 			var iterator = this._coordinates.length,
-				grid = !this.settings.autoWidth,
+				grid = !this.unors.autoWidth,
 				items = this.$stage.children();
 
 			if (grid && cache.items.merge) {
@@ -405,7 +405,7 @@
 			this._coordinates.length < 1 && this.$stage.removeAttr('style');
 		}
 	}, {
-		filter: [ 'width', 'items', 'settings' ],
+		filter: [ 'width', 'items', 'unors' ],
 		run: function(cache) {
 			cache.current = cache.current ? this.$stage.children().index(cache.current) : 0;
 			cache.current = Math.max(this.minimum(), Math.min(this.maximum(), cache.current));
@@ -417,10 +417,10 @@
 			this.animate(this.coordinates(this._current));
 		}
 	}, {
-		filter: [ 'width', 'position', 'items', 'settings' ],
+		filter: [ 'width', 'position', 'items', 'unors' ],
 		run: function() {
-			var rtl = this.settings.rtl ? 1 : -1,
-				padding = this.settings.stagePadding * 2,
+			var rtl = this.unors.rtl ? 1 : -1,
+				padding = this.unors.stagePadding * 2,
 				begin = this.coordinates(this.current()) + padding,
 				end = begin + this.width() * rtl,
 				inner, outer, matches = [], i, n;
@@ -439,7 +439,7 @@
 			this.$stage.children(':eq(' + matches.join('), :eq(') + ')').addClass('active');
 
 			this.$stage.children('.center').removeClass('center');
-			if (this.settings.center) {
+			if (this.unors.center) {
 				this.$stage.children().eq(this.current()).addClass('center');
 			}
 		}
@@ -449,7 +449,7 @@
 	 * Create the stage DOM element
 	 */
 	Owl.prototype.initializeStage = function() {
-		this.$stage = this.$element.find('.' + this.settings.stageClass);
+		this.$stage = this.$element.find('.' + this.unors.stageClass);
 
 		// if the stage is already in the DOM, grab it and skip stage initialization
 		if (this.$stage.length) {
@@ -459,10 +459,10 @@
 		this.$element.addClass(this.options.loadingClass);
 
 		// create stage
-		this.$stage = $('<' + this.settings.stageElement + '>', {
-			"class": this.settings.stageClass
+		this.$stage = $('<' + this.unors.stageElement + '>', {
+			"class": this.unors.stageClass
 		}).wrap( $( '<div/>', {
-			"class": this.settings.stageOuterClass
+			"class": this.unors.stageOuterClass
 		}));
 
 		// append stage
@@ -515,12 +515,12 @@
 		this.enter('initializing');
 		this.trigger('initialize');
 
-		this.$element.toggleClass(this.settings.rtlClass, this.settings.rtl);
+		this.$element.toggleClass(this.unors.rtlClass, this.unors.rtl);
 
-		if (this.settings.autoWidth && !this.is('pre-loading')) {
+		if (this.unors.autoWidth && !this.is('pre-loading')) {
 			var imgs, nestedSelector, width;
 			imgs = this.$element.find('img');
-			nestedSelector = this.settings.nestedItemSelector ? '.' + this.settings.nestedItemSelector : undefined;
+			nestedSelector = this.unors.nestedItemSelector ? '.' + this.unors.nestedItemSelector : undefined;
 			width = this.$element.children(nestedSelector).width();
 
 			if (imgs.length && width <= 0) {
@@ -544,13 +544,13 @@
 	 *                    prevent the expensive browser layout forced reflow the $element.is(':visible') does
 	 */
 	Owl.prototype.isVisible = function() {
-		return this.settings.checkVisibility
+		return this.unors.checkVisibility
 			? this.$element.is(':visible')
 			: true;
 	};
 
 	/**
-	 * Setups the current settings.
+	 * Setups the current unors.
 	 * @todo Remove responsive classes. Why should adaptive designs be brought into IE8?
 	 * @todo Support for media queries by using `matchMedia` would be nice.
 	 * @public
@@ -559,10 +559,10 @@
 		var viewport = this.viewport(),
 			overwrites = this.options.responsive,
 			match = -1,
-			settings = null;
+			unors = null;
 
 		if (!overwrites) {
-			settings = $.extend({}, this.options);
+			unors = $.extend({}, this.options);
 		} else {
 			$.each(overwrites, function(breakpoint) {
 				if (breakpoint <= viewport && breakpoint > match) {
@@ -570,25 +570,25 @@
 				}
 			});
 
-			settings = $.extend({}, this.options, overwrites[match]);
-			if (typeof settings.stagePadding === 'function') {
-				settings.stagePadding = settings.stagePadding();
+			unors = $.extend({}, this.options, overwrites[match]);
+			if (typeof unors.stagePadding === 'function') {
+				unors.stagePadding = unors.stagePadding();
 			}
-			delete settings.responsive;
+			delete unors.responsive;
 
 			// responsive class
-			if (settings.responsiveClass) {
+			if (unors.responsiveClass) {
 				this.$element.attr('class',
 					this.$element.attr('class').replace(new RegExp('(' + this.options.responsiveClass + '-)\\S+\\s', 'g'), '$1' + match)
 				);
 			}
 		}
 
-		this.trigger('change', { property: { name: 'settings', value: settings } });
+		this.trigger('change', { property: { name: 'unors', value: unors } });
 		this._breakpoint = match;
-		this.settings = settings;
-		this.invalidate('settings');
-		this.trigger('changed', { property: { name: 'settings', value: this.settings } });
+		this.unors = unors;
+		this.invalidate('unors');
+		this.trigger('changed', { property: { name: 'unors', value: this.unors } });
 	};
 
 	/**
@@ -596,9 +596,9 @@
 	 * @protected
 	 */
 	Owl.prototype.optionsLogic = function() {
-		if (this.settings.autoWidth) {
-			this.settings.stagePadding = false;
-			this.settings.merge = false;
+		if (this.unors.autoWidth) {
+			this.unors.stagePadding = false;
+			this.unors.merge = false;
 		}
 	};
 
@@ -612,7 +612,7 @@
 		var event = this.trigger('prepare', { content: item });
 
 		if (!event.data) {
-			event.data = $('<' + this.settings.itemElement + '/>')
+			event.data = $('<' + this.unors.itemElement + '/>')
 				.addClass(this.options.itemClass).append(item)
 		}
 
@@ -656,7 +656,7 @@
 			case Owl.Width.Outer:
 				return this._width;
 			default:
-				return this._width - this.settings.stagePadding * 2 + this.settings.margin;
+				return this._width - this.unors.stagePadding * 2 + this.unors.margin;
 		}
 	};
 
@@ -688,7 +688,7 @@
 	 */
 	Owl.prototype.onThrottledResize = function() {
 		window.clearTimeout(this.resizeTimer);
-		this.resizeTimer = window.setTimeout(this._handlers.onResize, this.settings.responsiveRefreshRate);
+		this.resizeTimer = window.setTimeout(this._handlers.onResize, this.unors.responsiveRefreshRate);
 	};
 
 	/**
@@ -734,17 +734,17 @@
 			this.$stage.on($.support.transition.end + '.owl.core', $.proxy(this.onTransitionEnd, this));
 		}
 
-		if (this.settings.responsive !== false) {
+		if (this.unors.responsive !== false) {
 			this.on(window, 'resize', this._handlers.onThrottledResize);
 		}
 
-		if (this.settings.mouseDrag) {
+		if (this.unors.mouseDrag) {
 			this.$element.addClass(this.options.dragClass);
 			this.$stage.on('mousedown.owl.core', $.proxy(this.onDragStart, this));
 			this.$stage.on('dragstart.owl.core selectstart.owl.core', function() { return false });
 		}
 
-		if (this.settings.touchDrag){
+		if (this.unors.touchDrag){
 			this.$stage.on('touchstart.owl.core', $.proxy(this.onDragStart, this));
 			this.$stage.on('touchcancel.owl.core', $.proxy(this.onDragEnd, this));
 		}
@@ -773,8 +773,8 @@
 		} else {
 			stage = this.$stage.position();
 			stage = {
-				x: this.settings.rtl ?
-				stage.left + this.$stage.width() - this.width() + this.settings.margin :
+				x: this.unors.rtl ?
+				stage.left + this.$stage.width() - this.width() + this.unors.margin :
 					stage.left,
 				y: stage.top
 			};
@@ -832,14 +832,14 @@
 
 		event.preventDefault();
 
-		if (this.settings.loop) {
+		if (this.unors.loop) {
 			minimum = this.coordinates(this.minimum());
 			maximum = this.coordinates(this.maximum() + 1) - minimum;
 			stage.x = (((stage.x - minimum) % maximum + maximum) % maximum) + minimum;
 		} else {
-			minimum = this.settings.rtl ? this.coordinates(this.maximum()) : this.coordinates(this.minimum());
-			maximum = this.settings.rtl ? this.coordinates(this.minimum()) : this.coordinates(this.maximum());
-			pull = this.settings.pullDrag ? -1 * delta.x / 5 : 0;
+			minimum = this.unors.rtl ? this.coordinates(this.maximum()) : this.coordinates(this.minimum());
+			maximum = this.unors.rtl ? this.coordinates(this.minimum()) : this.coordinates(this.maximum());
+			pull = this.unors.pullDrag ? -1 * delta.x / 5 : 0;
 			stage.x = Math.max(Math.min(stage.x, minimum + pull), maximum + pull);
 		}
 
@@ -858,14 +858,14 @@
 	Owl.prototype.onDragEnd = function(event) {
 		var delta = this.difference(this._drag.pointer, this.pointer(event)),
 			stage = this._drag.stage.current,
-			direction = delta.x > 0 ^ this.settings.rtl ? 'left' : 'right';
+			direction = delta.x > 0 ^ this.unors.rtl ? 'left' : 'right';
 
 		$(document).off('.owl.core');
 
 		this.$element.removeClass(this.options.grabClass);
 
 		if (delta.x !== 0 && this.is('dragging') || !this.is('valid')) {
-			this.speed(this.settings.dragEndSpeed || this.settings.smartSpeed);
+			this.speed(this.unors.dragEndSpeed || this.unors.smartSpeed);
 			this.current(this.closest(stage.x, delta.x !== 0 ? direction : this._drag.direction));
 			this.invalidate('position');
 			this.update();
@@ -887,7 +887,7 @@
 
 	/**
 	 * Gets absolute position of the closest item for a coordinate.
-	 * @todo Setting `freeDrag` makes `closest` not reusable. See #165.
+	 * @todo UnOr `freeDrag` makes `closest` not reusable. See #165.
 	 * @protected
 	 * @param {Number} coordinate - The coordinate in pixel.
 	 * @param {String} direction - The direction to check for the closest item. Ether `left` or `right`.
@@ -899,7 +899,7 @@
 			width = this.width(),
 			coordinates = this.coordinates();
 
-		if (!this.settings.freeDrag) {
+		if (!this.unors.freeDrag) {
 			// check closest item
 			$.each(coordinates, $.proxy(function(index, value) {
 				// on a left pull, check on current index
@@ -917,7 +917,7 @@
 			}, this));
 		}
 
-		if (!this.settings.loop) {
+		if (!this.unors.loop) {
 			// non loop boundries
 			if (this.op(coordinate, '>', coordinates[this.minimum()])) {
 				position = coordinate = this.minimum();
@@ -949,13 +949,13 @@
 			this.$stage.css({
 				transform: 'translate3d(' + coordinate + 'px,0px,0px)',
 				transition: (this.speed() / 1000) + 's' + (
-					this.settings.slideTransition ? ' ' + this.settings.slideTransition : ''
+					this.unors.slideTransition ? ' ' + this.unors.slideTransition : ''
 				)
 			});
 		} else if (animate) {
 			this.$stage.animate({
 				left: coordinate + 'px'
-			}, this.speed(), this.settings.fallbackEasing, $.proxy(this.onTransitionEnd, this));
+			}, this.speed(), this.unors.fallbackEasing, $.proxy(this.onTransitionEnd, this));
 		} else {
 			this.$stage.css({
 				left: coordinate + 'px'
@@ -1079,31 +1079,31 @@
 	 * @returns {Number}
 	 */
 	Owl.prototype.maximum = function(relative) {
-		var settings = this.settings,
+		var unors = this.unors,
 			maximum = this._coordinates.length,
 			iterator,
 			reciprocalItemsWidth,
 			elementWidth;
 
-		if (settings.loop) {
+		if (unors.loop) {
 			maximum = this._clones.length / 2 + this._items.length - 1;
-		} else if (settings.autoWidth || settings.merge) {
+		} else if (unors.autoWidth || unors.merge) {
 			iterator = this._items.length;
 			if (iterator) {
 				reciprocalItemsWidth = this._items[--iterator].width();
 				elementWidth = this.$element.width();
 				while (iterator--) {
-					reciprocalItemsWidth += this._items[iterator].width() + this.settings.margin;
+					reciprocalItemsWidth += this._items[iterator].width() + this.unors.margin;
 					if (reciprocalItemsWidth > elementWidth) {
 						break;
 					}
 				}
 			}
 			maximum = iterator + 1;
-		} else if (settings.center) {
+		} else if (unors.center) {
 			maximum = this._items.length - 1;
 		} else {
-			maximum = this._items.length - settings.items;
+			maximum = this._items.length - unors.items;
 		}
 
 		if (relative) {
@@ -1203,8 +1203,8 @@
 			}, this));
 		}
 
-		if (this.settings.center) {
-			if (this.settings.rtl) {
+		if (this.unors.center) {
+			if (this.unors.rtl) {
 				multiplier = -1;
 				newPosition = position + 1;
 			}
@@ -1233,7 +1233,7 @@
 			return 0;
 		}
 
-		return Math.min(Math.max(Math.abs(to - from), 1), 6) * Math.abs((factor || this.settings.smartSpeed));
+		return Math.min(Math.max(Math.abs(to - from), 1), 6) * Math.abs((factor || this.unors.smartSpeed));
 	};
 
 	/**
@@ -1251,8 +1251,8 @@
 			minimum = this.minimum(),
 			maximum = this.maximum();
 
-		if (this.settings.loop) {
-			if (!this.settings.rewind && Math.abs(distance) > items / 2) {
+		if (this.unors.loop) {
+			if (!this.unors.rewind && Math.abs(distance) > items / 2) {
 				distance += direction * -1 * items;
 			}
 
@@ -1264,7 +1264,7 @@
 				position = revert;
 				this.reset(current);
 			}
-		} else if (this.settings.rewind) {
+		} else if (this.unors.rewind) {
 			maximum += 1;
 			position = (position % maximum + maximum) % maximum;
 		} else {
@@ -1352,8 +1352,8 @@
 			content = (content instanceof jQuery) ? content : $(content);
 		}
 
-		if (this.settings.nestedItemSelector) {
-			content = content.find('.' + this.settings.nestedItemSelector);
+		if (this.unors.nestedItemSelector) {
+			content = content.find('.' + this.unors.nestedItemSelector);
 		}
 
 		content.filter(function() {
@@ -1365,7 +1365,7 @@
 			this._mergers.push(item.find('[data-merge]').addBack('[data-merge]').attr('data-merge') * 1 || 1);
 		}, this));
 
-		this.reset(this.isNumeric(this.settings.startPosition) ? this.settings.startPosition : 0);
+		this.reset(this.isNumeric(this.unors.startPosition) ? this.unors.startPosition : 0);
 
 		this.invalidate('items');
 	};
@@ -1457,7 +1457,7 @@
 		this.$stage.off('.owl.core');
 		$(document).off('.owl.core');
 
-		if (this.settings.responsive !== false) {
+		if (this.unors.responsive !== false) {
 			window.clearTimeout(this.resizeTimer);
 			this.off(window, 'resize', this._handlers.onThrottledResize);
 		}
@@ -1491,7 +1491,7 @@
 	 * @param {Number} [b] - The right side operand.
 	 */
 	Owl.prototype.op = function(a, o, b) {
-		var rtl = this.settings.rtl;
+		var rtl = this.unors.rtl;
 		switch (o) {
 			case '<':
 				return rtl ? a > b : a < b;
@@ -1570,8 +1570,8 @@
 			this.register({ type: Owl.Type.Event, name: name });
 			this.$element.trigger(event);
 
-			if (this.settings && typeof this.settings[handler] === 'function') {
-				this.settings[handler].call(this, event);
+			if (this.unors && typeof this.unors[handler] === 'function') {
+				this.unors[handler].call(this, event);
 			}
 		}
 
@@ -1797,7 +1797,7 @@
 		 */
 		this._handlers = {
 			'initialized.owl.carousel': $.proxy(function(e) {
-				if (e.namespace && this._core.settings.autoRefresh) {
+				if (e.namespace && this._core.unors.autoRefresh) {
 					this.watch();
 				}
 			}, this)
@@ -1828,7 +1828,7 @@
 		}
 
 		this._visible = this._core.isVisible();
-		this._interval = window.setInterval($.proxy(this.refresh, this), this._core.settings.autoRefreshInterval);
+		this._interval = window.setInterval($.proxy(this.refresh, this), this._core.unors.autoRefreshInterval);
 	};
 
 	/**
@@ -1907,23 +1907,23 @@
 					return;
 				}
 
-				if (!this._core.settings || !this._core.settings.lazyLoad) {
+				if (!this._core.unors || !this._core.unors.lazyLoad) {
 					return;
 				}
 
 				if ((e.property && e.property.name == 'position') || e.type == 'initialized') {
-					var settings = this._core.settings,
-						n = (settings.center && Math.ceil(settings.items / 2) || settings.items),
-						i = ((settings.center && n * -1) || 0),
+					var unors = this._core.unors,
+						n = (unors.center && Math.ceil(unors.items / 2) || unors.items),
+						i = ((unors.center && n * -1) || 0),
 						position = (e.property && e.property.value !== undefined ? e.property.value : this._core.current()) + i,
 						clones = this._core.clones().length,
 						load = $.proxy(function(i, v) { this.load(v) }, this);
 					//TODO: Need documentation for this new option
-					if (settings.lazyLoadEager > 0) {
-						n += settings.lazyLoadEager;
+					if (unors.lazyLoadEager > 0) {
+						n += unors.lazyLoadEager;
 						// If the carousel is looping also preload images that are to the "left"
-						if (settings.loop) {
-							position -= settings.lazyLoadEager;
+						if (unors.loop) {
+							position -= unors.lazyLoadEager;
 							n++;
 						}
 					}
@@ -2047,18 +2047,18 @@
 		 */
 		this._handlers = {
 			'initialized.owl.carousel refreshed.owl.carousel': $.proxy(function(e) {
-				if (e.namespace && this._core.settings.autoHeight) {
+				if (e.namespace && this._core.unors.autoHeight) {
 					this.update();
 				}
 			}, this),
 			'changed.owl.carousel': $.proxy(function(e) {
-				if (e.namespace && this._core.settings.autoHeight && e.property.name === 'position'){
+				if (e.namespace && this._core.unors.autoHeight && e.property.name === 'position'){
 					this.update();
 				}
 			}, this),
 			'loaded.owl.lazy': $.proxy(function(e) {
-				if (e.namespace && this._core.settings.autoHeight
-					&& e.element.closest('.' + this._core.settings.itemClass).index() === this._core.current()) {
+				if (e.namespace && this._core.unors.autoHeight
+					&& e.element.closest('.' + this._core.unors.itemClass).index() === this._core.current()) {
 					this.update();
 				}
 			}, this)
@@ -2075,7 +2075,7 @@
 		// These changes have been taken from a PR by gavrochelegnou proposed in #1575
 		// and have been made compatible with the latest jQuery version
 		$(window).on('load', function() {
-			if (refThis._core.settings.autoHeight) {
+			if (refThis._core.unors.autoHeight) {
 				refThis.update();
 			}
 		});
@@ -2084,7 +2084,7 @@
 		// When carousel has images, the height is dependent on the width
 		// and should also change on resize
 		$(window).resize(function() {
-			if (refThis._core.settings.autoHeight) {
+			if (refThis._core.unors.autoHeight) {
 				if (refThis._intervalId != null) {
 					clearTimeout(refThis._intervalId);
 				}
@@ -2111,8 +2111,8 @@
 	 */
 	AutoHeight.prototype.update = function() {
 		var start = this._core._current,
-			end = start + this._core.settings.items,
-			lazyLoadEnabled = this._core.settings.lazyLoad,
+			end = start + this._core.unors.items,
+			lazyLoadEnabled = this._core.unors.lazyLoad,
 			visible = this._core.$stage.children().toArray().slice(start, end),
 			heights = [],
 			maxheight = 0;
@@ -2131,7 +2131,7 @@
 
 		this._core.$stage.parent()
 			.height(maxheight)
-			.addClass(this._core.settings.autoHeightClass);
+			.addClass(this._core.unors.autoHeightClass);
 	};
 
 	AutoHeight.prototype.destroy = function() {
@@ -2198,7 +2198,7 @@
 				}
 			}, this),
 			'resize.owl.carousel': $.proxy(function(e) {
-				if (e.namespace && this._core.settings.video && this.isInFullScreen()) {
+				if (e.namespace && this._core.unors.video && this.isInFullScreen()) {
 					e.preventDefault();
 				}
 			}, this),
@@ -2264,8 +2264,8 @@
 				}
 			})(),
 			id = target.attr('data-vimeo-id') || target.attr('data-youtube-id') || target.attr('data-vzaar-id'),
-			width = target.attr('data-width') || this._core.settings.videoWidth,
-			height = target.attr('data-height') || this._core.settings.videoHeight,
+			width = target.attr('data-width') || this._core.unors.videoWidth,
+			height = target.attr('data-height') || this._core.unors.videoHeight,
 			url = target.attr('href');
 
 		if (url) {
@@ -2325,11 +2325,11 @@
 			customTn = target.find('img'),
 			srcType = 'src',
 			lazyClass = '',
-			settings = this._core.settings,
+			unors = this._core.unors,
 			create = function(path) {
 				icon = '<div class="owl-video-play-icon"></div>';
 
-				if (settings.lazyLoad) {
+				if (unors.lazyLoad) {
 					tnLink = $('<div/>',{
 						"class": 'owl-video-tn ' + lazyClass,
 						"srcType": path
@@ -2350,7 +2350,7 @@
 			"style": dimensions
 		}));
 
-		if (this._core.settings.lazyLoad) {
+		if (this._core.unors.lazyLoad) {
 			srcType = 'data-src';
 			lazyClass = 'owl-lazy';
 		}
@@ -2410,7 +2410,7 @@
 	 */
 	Video.prototype.play = function(event) {
 		var target = $(event.target),
-			item = target.closest('.' + this._core.settings.itemClass),
+			item = target.closest('.' + this._core.unors.itemClass),
 			video = this._videos[item.attr('data-video')],
 			width = video.width || '100%',
 			height = video.height || this._core.$stage.height(),
@@ -2536,7 +2536,7 @@
 	 */
 	Animate.prototype.swap = function() {
 
-		if (this.core.settings.items !== 1) {
+		if (this.core.unors.items !== 1) {
 			return;
 		}
 
@@ -2550,8 +2550,8 @@
 			clear = $.proxy(this.clear, this),
 			previous = this.core.$stage.children().eq(this.previous),
 			next = this.core.$stage.children().eq(this.next),
-			incoming = this.core.settings.animateIn,
-			outgoing = this.core.settings.animateOut;
+			incoming = this.core.unors.animateIn,
+			outgoing = this.core.unors.animateOut;
 
 		if (this.core.current() === this.previous) {
 			return;
@@ -2575,8 +2575,8 @@
 	Animate.prototype.clear = function(e) {
 		$(e.target).css( { 'left': '' } )
 			.removeClass('animated owl-animated-out owl-animated-in')
-			.removeClass(this.core.settings.animateIn)
-			.removeClass(this.core.settings.animateOut);
+			.removeClass(this.core.unors.animateIn)
+			.removeClass(this.core.unors.animateOut);
 		this.core.onTransitionEnd();
 	};
 
@@ -2657,8 +2657,8 @@
 		 */
 		this._handlers = {
 			'changed.owl.carousel': $.proxy(function(e) {
-				if (e.namespace && e.property.name === 'settings') {
-					if (this._core.settings.autoplay) {
+				if (e.namespace && e.property.name === 'unors') {
+					if (this._core.unors.autoplay) {
 						this.play();
 					} else {
 						this.stop();
@@ -2670,7 +2670,7 @@
 				}
 			}, this),
 			'initialized.owl.carousel': $.proxy(function(e) {
-				if (e.namespace && this._core.settings.autoplay) {
+				if (e.namespace && this._core.unors.autoplay) {
 					this.play();
 				}
 			}, this),
@@ -2685,22 +2685,22 @@
 				}
 			}, this),
 			'mouseover.owl.autoplay': $.proxy(function() {
-				if (this._core.settings.autoplayHoverPause && this._core.is('rotating')) {
+				if (this._core.unors.autoplayHoverPause && this._core.is('rotating')) {
 					this.pause();
 				}
 			}, this),
 			'mouseleave.owl.autoplay': $.proxy(function() {
-				if (this._core.settings.autoplayHoverPause && this._core.is('rotating')) {
+				if (this._core.unors.autoplayHoverPause && this._core.is('rotating')) {
 					this.play();
 				}
 			}, this),
 			'touchstart.owl.core': $.proxy(function() {
-				if (this._core.settings.autoplayHoverPause && this._core.is('rotating')) {
+				if (this._core.unors.autoplayHoverPause && this._core.is('rotating')) {
 					this.pause();
 				}
 			}, this),
 			'touchend.owl.core': $.proxy(function() {
-				if (this._core.settings.autoplayHoverPause) {
+				if (this._core.unors.autoplayHoverPause) {
 					this.play();
 				}
 			}, this)
@@ -2738,7 +2738,7 @@
 		if (this._core.is('interacting') || document.hidden) {
 			return;
 		}
-		this._core.next(speed || this._core.settings.autoplaySpeed);
+		this._core.next(speed || this._core.unors.autoplaySpeed);
 	}
 
 	/**
@@ -2762,7 +2762,7 @@
 			this._core.enter('rotating');
 		}
 
-		timeout = timeout || this._core.settings.autoplayTimeout;
+		timeout = timeout || this._core.unors.autoplayTimeout;
 
 		// Calculate the elapsed time since the last transition. If the carousel
 		// wasn't playing this calculation will yield zero.
@@ -2908,18 +2908,18 @@
 		 */
 		this._handlers = {
 			'prepared.owl.carousel': $.proxy(function(e) {
-				if (e.namespace && this._core.settings.dotsData) {
-					this._templates.push('<div class="' + this._core.settings.dotClass + '">' +
+				if (e.namespace && this._core.unors.dotsData) {
+					this._templates.push('<div class="' + this._core.unors.dotClass + '">' +
 						$(e.content).find('[data-dot]').addBack('[data-dot]').attr('data-dot') + '</div>');
 				}
 			}, this),
 			'added.owl.carousel': $.proxy(function(e) {
-				if (e.namespace && this._core.settings.dotsData) {
+				if (e.namespace && this._core.unors.dotsData) {
 					this._templates.splice(e.position, 0, this._templates.pop());
 				}
 			}, this),
 			'remove.owl.carousel': $.proxy(function(e) {
-				if (e.namespace && this._core.settings.dotsData) {
+				if (e.namespace && this._core.unors.dotsData) {
 					this._templates.splice(e.position, 1);
 				}
 			}, this),
@@ -2990,37 +2990,37 @@
 	 */
 	Navigation.prototype.initialize = function() {
 		var override,
-			settings = this._core.settings;
+			unors = this._core.unors;
 
 		// create DOM structure for relative navigation
-		this._controls.$relative = (settings.navContainer ? $(settings.navContainer)
-			: $('<div>').addClass(settings.navContainerClass).appendTo(this.$element)).addClass('disabled');
+		this._controls.$relative = (unors.navContainer ? $(unors.navContainer)
+			: $('<div>').addClass(unors.navContainerClass).appendTo(this.$element)).addClass('disabled');
 
-		this._controls.$previous = $('<' + settings.navElement + '>')
-			.addClass(settings.navClass[0])
-			.html(settings.navText[0])
+		this._controls.$previous = $('<' + unors.navElement + '>')
+			.addClass(unors.navClass[0])
+			.html(unors.navText[0])
 			.prependTo(this._controls.$relative)
 			.on('click', $.proxy(function(e) {
-				this.prev(settings.navSpeed);
+				this.prev(unors.navSpeed);
 			}, this));
-		this._controls.$next = $('<' + settings.navElement + '>')
-			.addClass(settings.navClass[1])
-			.html(settings.navText[1])
+		this._controls.$next = $('<' + unors.navElement + '>')
+			.addClass(unors.navClass[1])
+			.html(unors.navText[1])
 			.appendTo(this._controls.$relative)
 			.on('click', $.proxy(function(e) {
-				this.next(settings.navSpeed);
+				this.next(unors.navSpeed);
 			}, this));
 
 		// create DOM structure for absolute navigation
-		if (!settings.dotsData) {
+		if (!unors.dotsData) {
 			this._templates = [ $('<button role="button">')
-				.addClass(settings.dotClass)
+				.addClass(unors.dotClass)
 				.append($('<span>'))
 				.prop('outerHTML') ];
 		}
 
-		this._controls.$absolute = (settings.dotsContainer ? $(settings.dotsContainer)
-			: $('<div>').addClass(settings.dotsClass).appendTo(this.$element)).addClass('disabled');
+		this._controls.$absolute = (unors.dotsContainer ? $(unors.dotsContainer)
+			: $('<div>').addClass(unors.dotsClass).appendTo(this.$element)).addClass('disabled');
 
 		this._controls.$absolute.on('click', 'button', $.proxy(function(e) {
 			var index = $(e.target).parent().is(this._controls.$absolute)
@@ -3028,7 +3028,7 @@
 
 			e.preventDefault();
 
-			this.to(index, settings.dotsSpeed);
+			this.to(index, unors.dotsSpeed);
 		}, this));
 
 		/*$el.on('focusin', function() {
@@ -3055,14 +3055,14 @@
 	 * @protected
 	 */
 	Navigation.prototype.destroy = function() {
-		var handler, control, property, override, settings;
-		settings = this._core.settings;
+		var handler, control, property, override, unors;
+		unors = this._core.unors;
 
 		for (handler in this._handlers) {
 			this.$element.off(handler, this._handlers[handler]);
 		}
 		for (control in this._controls) {
-			if (control === '$relative' && settings.navContainer) {
+			if (control === '$relative' && unors.navContainer) {
 				this._controls[control].html('');
 			} else {
 				this._controls[control].remove();
@@ -3085,15 +3085,15 @@
 			lower = this._core.clones().length / 2,
 			upper = lower + this._core.items().length,
 			maximum = this._core.maximum(true),
-			settings = this._core.settings,
-			size = settings.center || settings.autoWidth || settings.dotsData
-				? 1 : settings.dotsEach || settings.items;
+			unors = this._core.unors,
+			size = unors.center || unors.autoWidth || unors.dotsData
+				? 1 : unors.dotsEach || unors.items;
 
-		if (settings.slideBy !== 'page') {
-			settings.slideBy = Math.min(settings.slideBy, settings.items);
+		if (unors.slideBy !== 'page') {
+			unors.slideBy = Math.min(unors.slideBy, unors.items);
 		}
 
-		if (settings.dots || settings.slideBy == 'page') {
+		if (unors.dots || unors.slideBy == 'page') {
 			this._pages = [];
 
 			for (i = lower, j = 0, k = 0; i < upper; i++) {
@@ -3119,24 +3119,24 @@
 	 */
 	Navigation.prototype.draw = function() {
 		var difference,
-			settings = this._core.settings,
-			disabled = this._core.items().length <= settings.items,
+			unors = this._core.unors,
+			disabled = this._core.items().length <= unors.items,
 			index = this._core.relative(this._core.current()),
-			loop = settings.loop || settings.rewind;
+			loop = unors.loop || unors.rewind;
 
-		this._controls.$relative.toggleClass('disabled', !settings.nav || disabled);
+		this._controls.$relative.toggleClass('disabled', !unors.nav || disabled);
 
-		if (settings.nav) {
+		if (unors.nav) {
 			this._controls.$previous.toggleClass('disabled', !loop && index <= this._core.minimum(true));
 			this._controls.$next.toggleClass('disabled', !loop && index >= this._core.maximum(true));
 		}
 
-		this._controls.$absolute.toggleClass('disabled', !settings.dots || disabled);
+		this._controls.$absolute.toggleClass('disabled', !unors.dots || disabled);
 
-		if (settings.dots) {
+		if (unors.dots) {
 			difference = this._pages.length - this._controls.$absolute.children().length;
 
-			if (settings.dotsData && difference !== 0) {
+			if (unors.dotsData && difference !== 0) {
 				this._controls.$absolute.html(this._templates.join(''));
 			} else if (difference > 0) {
 				this._controls.$absolute.append(new Array(difference + 1).join(this._templates[0]));
@@ -3155,13 +3155,13 @@
 	 * @param {Event} event - The event object which gets thrown.
 	 */
 	Navigation.prototype.onTrigger = function(event) {
-		var settings = this._core.settings;
+		var unors = this._core.unors;
 
 		event.page = {
 			index: $.inArray(this.current(), this._pages),
 			count: this._pages.length,
-			size: settings && (settings.center || settings.autoWidth || settings.dotsData
-				? 1 : settings.dotsEach || settings.items)
+			size: unors && (unors.center || unors.autoWidth || unors.dotsData
+				? 1 : unors.dotsEach || unors.items)
 		};
 	};
 
@@ -3184,9 +3184,9 @@
 	 */
 	Navigation.prototype.getPosition = function(successor) {
 		var position, length,
-			settings = this._core.settings;
+			unors = this._core.unors;
 
-		if (settings.slideBy == 'page') {
+		if (unors.slideBy == 'page') {
 			position = $.inArray(this.current(), this._pages);
 			length = this._pages.length;
 			successor ? ++position : --position;
@@ -3194,7 +3194,7 @@
 		} else {
 			position = this._core.relative(this._core.current());
 			length = this._core.items().length;
-			successor ? position += settings.slideBy : position -= settings.slideBy;
+			successor ? position += unors.slideBy : position -= unors.slideBy;
 		}
 
 		return position;
@@ -3283,7 +3283,7 @@
 		 */
 		this._handlers = {
 			'initialized.owl.carousel': $.proxy(function(e) {
-				if (e.namespace && this._core.settings.startPosition === 'URLHash') {
+				if (e.namespace && this._core.unors.startPosition === 'URLHash') {
 					$(window).trigger('hashchange.owl.navigation');
 				}
 			}, this),

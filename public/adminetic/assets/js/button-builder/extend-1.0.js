@@ -179,7 +179,7 @@ function setColor(){
         $("#borderBottomColor").val("B92C28");
     }
     
-    // Setting background of color selector
+    // UnOr background of color selector
     $(".custom-button-color input").each(function(){
         var colorValue = $(this).val();
         //alert(colorValue);
@@ -203,7 +203,7 @@ function setColor(){
     var btnBgHover = "background-color: " + "#" + bottomColor + ";";
     var btnGradientHover = "background-image: linear-gradient(to bottom, " + "#" + bottomColor + "," + " " + "#" + bottomColor + ");";
     
-    // Setting CSS
+    // UnOr CSS
     var resultButton = $("#result").find("a, input, button");
     
     if(resultButton.hasClass("active") || resultButton.hasClass("disabled")){
@@ -445,7 +445,7 @@ function setColor(){
             var btnBgHover = "background-color: " + "#" + bottomColor + ";";
             var btnGradientHover = "background-image: linear-gradient(to bottom, " + "#" + bottomColor + "," + " " + "#" + bottomColor + ");";
             
-            // Setting CSS
+            // UnOr CSS
             var resultButton = $("#result").find("a, input, button");
             
             if(resultButton.hasClass("active") || resultButton.hasClass("disabled")){

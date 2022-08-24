@@ -138,7 +138,7 @@ $(document).ready(function() {
         ],
         "order": [[ 2, 'asc' ]],
         "displayLength": 25,
-        "drawCallback": function ( settings ) {
+        "drawCallback": function ( unors ) {
             var api = this.api();
             var rows = api.rows( {page:'current'} ).nodes();
             var last=null;
@@ -597,7 +597,7 @@ $(document).ready(function() {
     $('#datatable-ordering').DataTable();
     //Ordering Plug-ins (with type detection) end here
     //Range plugin datatable start here
-    $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+    $.fn.dataTable.ext.search.push(function(unors, data, dataIndex) {
         var min = parseInt($('#min').val(), 10);
         var max = parseInt($('#max').val(), 10);
         var age = parseFloat(data[3]) || 0;
@@ -612,28 +612,28 @@ $(document).ready(function() {
     });
     //Range plugin datatable end here    
     //datatable dom ordering start here
-    $.fn.dataTable.ext.order['dom-text'] = function(settings, col) {
+    $.fn.dataTable.ext.order['dom-text'] = function(unors, col) {
         return this.api().column(col, {
             order: 'index'
         }).nodes().map(function(td, i) {
             return $('input', td).val();
         });
     }
-    $.fn.dataTable.ext.order['dom-text-numeric'] = function(settings, col) {
+    $.fn.dataTable.ext.order['dom-text-numeric'] = function(unors, col) {
         return this.api().column(col, {
             order: 'index'
         }).nodes().map(function(td, i) {
             return $('input', td).val() * 1;
         });
     }
-    $.fn.dataTable.ext.order['dom-select'] = function(settings, col) {
+    $.fn.dataTable.ext.order['dom-select'] = function(unors, col) {
         return this.api().column(col, {
             order: 'index'
         }).nodes().map(function(td, i) {
             return $('select', td).val();
         });
     }   
-    $.fn.dataTable.ext.order['dom-checkbox'] = function(settings, col) {
+    $.fn.dataTable.ext.order['dom-checkbox'] = function(unors, col) {
         return this.api().column(col, {
             order: 'index'
         }).nodes().map(function(td, i) {

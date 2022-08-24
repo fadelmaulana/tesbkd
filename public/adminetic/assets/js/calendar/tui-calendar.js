@@ -18622,7 +18622,7 @@
 
                 /**
                  * Set a style
-                 * @param {string} key - key for setting a style
+                 * @param {string} key - key for unor a style
                  * @param {string} style - style value
                  * @returns {boolean} true if the give key is valid or false
                  */

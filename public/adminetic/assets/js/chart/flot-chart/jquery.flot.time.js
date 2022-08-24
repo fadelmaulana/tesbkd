@@ -150,7 +150,7 @@ API.txt for details.
 		} else if (typeof timezoneJS != "undefined" && typeof timezoneJS.Date != "undefined") {
 			var d = new timezoneJS.Date();
 			// timezone-js is fickle, so be sure to set the time zone before
-			// setting the time.
+			// unor the time.
 			d.setTimezone(opts.timezone);
 			d.setTime(ts);
 			return d;

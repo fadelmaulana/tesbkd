@@ -78,7 +78,7 @@
       buttonup_txt: 'button-up-txt'
     };
     return this.each(function() {
-    var settings,
+    var unors,
       originalinput = $(this),
       originalinput_data = originalinput.data(),
       container,
@@ -102,7 +102,7 @@
         console.log('Must be an input.');
         return;
       }
-      _initSettings();
+      _initUnOrs();
       _setInitval();
       _checkValue();
       _buildHtml();
@@ -113,21 +113,21 @@
       elements.input.css('display', 'block');
       }
       function _setInitval() {
-        if (settings.initval !== '' && originalinput.val() === '') {
-          originalinput.val(settings.initval);
+        if (unors.initval !== '' && originalinput.val() === '') {
+          originalinput.val(unors.initval);
         }
       }
-      function changeSettings(newsettings) {
-        _updateSettings(newsettings);
+      function changeUnOrs(newunors) {
+        _updateUnOrs(newunors);
         _checkValue();
         var value = elements.input.val();
         if (value !== '') {
           value = Number(elements.input.val());
-          elements.input.val(value.toFixed(settings.decimals));
+          elements.input.val(value.toFixed(unors.decimals));
         }
       }
-      function _initSettings() {
-        settings = $.extend({}, defaults, originalinput_data, _parseAttributes(), options);
+      function _initUnOrs() {
+        unors = $.extend({}, defaults, originalinput_data, _parseAttributes(), options);
       }
       function _parseAttributes() {
         var data = {};
@@ -139,14 +139,14 @@
         });
         return data;
       }
-      function _updateSettings(newsettings) {
-        settings = $.extend({}, settings, newsettings);
+      function _updateUnOrs(newunors) {
+        unors = $.extend({}, unors, newunors);
       }
       function _buildHtml() {
         var initval = originalinput.val(),
         parentelement = originalinput.parent();
         if (initval !== '') {
-          initval = Number(initval).toFixed(settings.decimals);
+          initval = Number(initval).toFixed(unors.decimals);
         }
         originalinput.data('initvalue', initval).val(initval);
         originalinput.addClass('form-control');
@@ -163,22 +163,22 @@
         next = originalinput.next();
         var downhtml,
         uphtml,
-        prefixhtml = '<span class="input-group-text bootstrap-touchspin-prefix">' + settings.prefix + '</span>',
-        postfixhtml = '<span class="input-group-text bootstrap-touchspin-postfix">' + settings.postfix + '</span>';
+        prefixhtml = '<span class="input-group-text bootstrap-touchspin-prefix">' + unors.prefix + '</span>',
+        postfixhtml = '<span class="input-group-text bootstrap-touchspin-postfix">' + unors.postfix + '</span>';
         if (prev.hasClass('input-group-btn')) {
-          downhtml = '<button class="' + settings.buttondown_class + ' bootstrap-touchspin-down" type="button">' + settings.buttondown_txt + '</button>';
+          downhtml = '<button class="' + unors.buttondown_class + ' bootstrap-touchspin-down" type="button">' + unors.buttondown_txt + '</button>';
           prev.append(downhtml);
         }
         else {
-          downhtml = '<button class="' + settings.buttondown_class + ' bootstrap-touchspin-down" type="button">' + settings.buttondown_txt + '</button>';
+          downhtml = '<button class="' + unors.buttondown_class + ' bootstrap-touchspin-down" type="button">' + unors.buttondown_txt + '</button>';
           $(downhtml).insertBefore(originalinput);
         }
         if (next.hasClass('input-group-btn')) {
-          uphtml = '<button class="' + settings.buttonup_class + ' bootstrap-touchspin-up" type="button">' + settings.buttonup_txt + '</button>';
+          uphtml = '<button class="' + unors.buttonup_class + ' bootstrap-touchspin-up" type="button">' + unors.buttonup_txt + '</button>';
           next.prepend(uphtml);
         }
         else {
-          uphtml = '<button class="' + settings.buttonup_class + ' bootstrap-touchspin-up" type="button">' + settings.buttonup_txt + '</button>';
+          uphtml = '<button class="' + unors.buttonup_class + ' bootstrap-touchspin-up" type="button">' + unors.buttonup_txt + '</button>';
           $(uphtml).insertAfter(originalinput);
         }
         $(prefixhtml).insertBefore(originalinput);
@@ -187,11 +187,11 @@
       }
       function _buildInputGroup() {
         var html;
-        if (settings.verticalbuttons) {
-          html = '<div class="input-group bootstrap-touchspin"><span class="input-group-text bootstrap-touchspin-prefix">' + settings.prefix + '</span><span class="input-group-text bootstrap-touchspin-postfix">' + settings.postfix + '</span><span class="input-group-btn-vertical"><button class="' + settings.buttondown_class + ' bootstrap-touchspin-up" type="button"><i class="' + settings.verticalupclass + '"></i></button><button class="' + settings.buttonup_class + ' bootstrap-touchspin-down" type="button"><i class="' + settings.verticaldownclass + '"></i></button></span></div>';
+        if (unors.verticalbuttons) {
+          html = '<div class="input-group bootstrap-touchspin"><span class="input-group-text bootstrap-touchspin-prefix">' + unors.prefix + '</span><span class="input-group-text bootstrap-touchspin-postfix">' + unors.postfix + '</span><span class="input-group-btn-vertical"><button class="' + unors.buttondown_class + ' bootstrap-touchspin-up" type="button"><i class="' + unors.verticalupclass + '"></i></button><button class="' + unors.buttonup_class + ' bootstrap-touchspin-down" type="button"><i class="' + unors.verticaldownclass + '"></i></button></span></div>';
         }
         else {
-          html = '<div class="input-group bootstrap-touchspin"><button class="' + settings.buttondown_class + ' bootstrap-touchspin-down" type="button">' + settings.buttondown_txt + '</button><span class="input-group-text bootstrap-touchspin-prefix">' + settings.prefix + '</span><span class="input-group-text bootstrap-touchspin-postfix">' + settings.postfix + '</span><button class="' + settings.buttonup_class + ' bootstrap-touchspin-up" type="button">' + settings.buttonup_txt + '</button></div>';
+          html = '<div class="input-group bootstrap-touchspin"><button class="' + unors.buttondown_class + ' bootstrap-touchspin-down" type="button">' + unors.buttondown_txt + '</button><span class="input-group-text bootstrap-touchspin-prefix">' + unors.prefix + '</span><span class="input-group-text bootstrap-touchspin-postfix">' + unors.postfix + '</span><button class="' + unors.buttonup_class + ' bootstrap-touchspin-up" type="button">' + unors.buttonup_txt + '</button></div>';
         }
         container = $(html).insertBefore(originalinput);
         $('.bootstrap-touchspin-prefix', container).after(originalinput);
@@ -207,15 +207,15 @@
           down: $('.bootstrap-touchspin-down', container),
           up: $('.bootstrap-touchspin-up', container),
           input: $('input', container),
-          prefix: $('.bootstrap-touchspin-prefix', container).addClass(settings.prefix_extraclass),
-          postfix: $('.bootstrap-touchspin-postfix', container).addClass(settings.postfix_extraclass)
+          prefix: $('.bootstrap-touchspin-prefix', container).addClass(unors.prefix_extraclass),
+          postfix: $('.bootstrap-touchspin-postfix', container).addClass(unors.postfix_extraclass)
         };
       }
       function _hideEmptyPrefixPostfix() {
-        if (settings.prefix === '') {
+        if (unors.prefix === '') {
           elements.prefix.hide();
         }
-        if (settings.postfix === '') {
+        if (unors.postfix === '') {
           elements.postfix.hide();
         }
       }
@@ -365,7 +365,7 @@
           stopSpin();
         });
         originalinput.on('mousewheel DOMMouseScroll', function(ev) {
-          if (!settings.mousewheel || !originalinput.is(':focus')) {
+          if (!unors.mousewheel || !originalinput.is(':focus')) {
             return;
           }
         var delta = ev.originalEvent.wheelDelta || -ev.originalEvent.deltaY || -ev.originalEvent.detail;
@@ -397,18 +397,18 @@
         originalinput.on('touchspin.stopspin', function() {
           stopSpin();
         });
-        originalinput.on('touchspin.updatesettings', function(e, newsettings) {
-          changeSettings(newsettings);
+        originalinput.on('touchspin.updateunors', function(e, newunors) {
+          changeUnOrs(newunors);
         });
       }
       function _forcestepdivisibility(value) {
-        switch (settings.forcestepdivisibility) {
+        switch (unors.forcestepdivisibility) {
           case 'round':
-          return (Math.round(value / settings.step) * settings.step).toFixed(settings.decimals);
+          return (Math.round(value / unors.step) * unors.step).toFixed(unors.decimals);
           case 'floor':
-          return (Math.floor(value / settings.step) * settings.step).toFixed(settings.decimals);
+          return (Math.floor(value / unors.step) * unors.step).toFixed(unors.decimals);
           case 'ceil':
-          return (Math.ceil(value / settings.step) * settings.step).toFixed(settings.decimals);
+          return (Math.ceil(value / unors.step) * unors.step).toFixed(unors.decimals);
           default:
           return value;
         }
@@ -417,19 +417,19 @@
         var val, parsedval, returnval;
         val = originalinput.val();
         if (val === '') {
-          if (settings.replacementval !== '') {
-            originalinput.val(settings.replacementval);
+          if (unors.replacementval !== '') {
+            originalinput.val(unors.replacementval);
             originalinput.trigger('change');
           }
           return;
         }
-        if (settings.decimals > 0 && val === '.') {
+        if (unors.decimals > 0 && val === '.') {
           return;
         }
         parsedval = parseFloat(val);
         if (isNaN(parsedval)) {
-          if (settings.replacementval !== '') {
-            parsedval = settings.replacementval;
+          if (unors.replacementval !== '') {
+            parsedval = unors.replacementval;
           }
           else {
             parsedval = 0;
@@ -439,11 +439,11 @@
         if (parsedval.toString() !== val) {
           returnval = parsedval;
         }
-        if (parsedval < settings.min) {
-          returnval = settings.min;
+        if (parsedval < unors.min) {
+          returnval = unors.min;
         }
-        if (parsedval > settings.max) {
-          returnval = settings.max;
+        if (parsedval > unors.max) {
+          returnval = unors.max;
         }
         returnval = _forcestepdivisibility(returnval);
         if (Number(val).toString() !== returnval.toString()) {
@@ -452,18 +452,18 @@
         }
       }
       function _getBoostedStep() {
-        if (!settings.booster) {
-          return settings.step;
+        if (!unors.booster) {
+          return unors.step;
         }
         else {
-          var boosted = Math.pow(2, Math.floor(spincount / settings.boostat)) * settings.step;
-          if (settings.maxboostedstep) {
-            if (boosted > settings.maxboostedstep) {
-              boosted = settings.maxboostedstep;
+          var boosted = Math.pow(2, Math.floor(spincount / unors.boostat)) * unors.step;
+          if (unors.maxboostedstep) {
+            if (boosted > unors.maxboostedstep) {
+              boosted = unors.maxboostedstep;
               value = Math.round((value / boosted)) * boosted;
             }
           }
-          return Math.max(settings.step, boosted);
+          return Math.max(unors.step, boosted);
         }
       }
       function upOnce() {
@@ -475,12 +475,12 @@
         var initvalue = value,
         boostedstep = _getBoostedStep();
         value = value + boostedstep;
-        if (value > settings.max) {
-          value = settings.max;
+        if (value > unors.max) {
+          value = unors.max;
           originalinput.trigger('touchspin.on.max');
           stopSpin();
         }
-        elements.input.val(Number(value).toFixed(settings.decimals));
+        elements.input.val(Number(value).toFixed(unors.decimals));
         if (initvalue !== value) {
           originalinput.trigger('change');
         }
@@ -494,12 +494,12 @@
         var initvalue = value,
         boostedstep = _getBoostedStep();
         value = value - boostedstep;
-        if (value < settings.min) {
-          value = settings.min;
+        if (value < unors.min) {
+          value = unors.min;
           originalinput.trigger('touchspin.on.min');
           stopSpin();
         }
-        elements.input.val(value.toFixed(settings.decimals));
+        elements.input.val(value.toFixed(unors.decimals));
         if (initvalue !== value) {
           originalinput.trigger('change');
         }
@@ -514,8 +514,8 @@
           downSpinTimer = setInterval(function() {
             spincount++;
             downOnce();
-          }, settings.stepinterval);
-        }, settings.stepintervaldelay);
+          }, unors.stepinterval);
+        }, unors.stepintervaldelay);
       }
       function startUpSpin() {
         stopSpin();
@@ -527,8 +527,8 @@
           upSpinTimer = setInterval(function() {
             spincount++;
             upOnce();
-          }, settings.stepinterval);
-        }, settings.stepintervaldelay);
+          }, unors.stepinterval);
+        }, unors.stepintervaldelay);
       }
       function stopSpin() {
         clearTimeout(downDelayTimeout);

@@ -23,7 +23,7 @@
 }(this, function(moment, $) {
     var DateRangePicker = function(element, options, cb) {
 
-        //default settings for options
+        //default unors for options
         this.parentEl = 'body';
         this.element = $(element);
         this.startDate = moment().startOf('day');
@@ -82,7 +82,7 @@
         if (typeof options !== 'object' || options === null)
             options = {};
 
-        //allow setting options with data attributes
+        //allow unor options with data attributes
         //data-api options will be overwritten with custom javascript options
         options = $.extend(this.element.data(), options);
 
@@ -765,7 +765,7 @@
             html += '</thead>';
             html += '<tbody>';
 
-            //adjust maxDate to reflect the dateLimit setting in order to
+            //adjust maxDate to reflect the dateLimit unor in order to
             //grey out end dates beyond the dateLimit
             if (this.endDate == null && this.dateLimit) {
                 var maxLimit = this.startDate.clone().add(this.dateLimit).endOf('day');

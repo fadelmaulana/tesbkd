@@ -561,7 +561,7 @@
             this.storage = new PersistentStorage(o.cacheKey);
         }
         _.mixin(Prefetch.prototype, {
-            _settings: function settings() {
+            _unors: function unors() {
                 return {
                     url: this.url,
                     type: "GET",
@@ -588,12 +588,12 @@
                 return stored.data && !isExpired ? stored.data : null;
             },
             fromNetwork: function(cb) {
-                var that = this, settings;
+                var that = this, unors;
                 if (!cb) {
                     return;
                 }
-                settings = this.prepare(this._settings());
-                this.transport(settings).fail(onError).done(onResponse);
+                unors = this.prepare(this._unors());
+                this.transport(unors).fail(onError).done(onResponse);
                 function onError() {
                     cb(true);
                 }
@@ -621,7 +621,7 @@
             });
         }
         _.mixin(Remote.prototype, {
-            _settings: function settings() {
+            _unors: function unors() {
                 return {
                     url: this.url,
                     type: "GET",
@@ -629,13 +629,13 @@
                 };
             },
             get: function get(query, cb) {
-                var that = this, settings;
+                var that = this, unors;
                 if (!cb) {
                     return;
                 }
                 query = query || "";
-                settings = this.prepare(query, this._settings());
-                return this.transport.get(settings, onResponse);
+                unors = this.prepare(query, this._unors());
+                return this.transport.get(unors, onResponse);
                 function onResponse(err, resp) {
                     err ? cb([]) : cb(that.transform(resp));
                 }
@@ -747,16 +747,16 @@
                 prepare = idenityPrepare;
             }
             return prepare;
-            function prepareByReplace(query, settings) {
-                settings.url = replace(settings.url, query);
-                return settings;
+            function prepareByReplace(query, unors) {
+                unors.url = replace(unors.url, query);
+                return unors;
             }
-            function prepareByWildcard(query, settings) {
-                settings.url = settings.url.replace(wildcard, encodeURIComponent(query));
-                return settings;
+            function prepareByWildcard(query, unors) {
+                unors.url = unors.url.replace(wildcard, encodeURIComponent(query));
+                return unors;
             }
-            function idenityPrepare(query, settings) {
-                return settings;
+            function idenityPrepare(query, unors) {
+                return unors;
             }
         }
         function toLimiter(o) {

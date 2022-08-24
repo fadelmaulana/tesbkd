@@ -1,4 +1,4 @@
-// Common settings
+// Common unors
 var platform = new H.service.Platform({
   app_id: 'devportal-demo-20180625',
   app_code: '9v2BkviRwi9Ot26kp2IysQ',
@@ -48,7 +48,7 @@ function switchMapLanguage(map, platform){
     );
   map.setBaseLayer(chineseMapLayer);
   var ui = H.ui.UI.createDefault(map, defaultLayers, 'zh-CN');
-  ui.removeControl('mapsettings');
+  ui.removeControl('mapunors');
 }
 var map = new H.Map(document.getElementById('map3'),
   defaultLayers.normal.map,{
@@ -81,7 +81,7 @@ var map = new H.Map(document.getElementById('map4'),
 });
 var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 var ui = H.ui.UI.createDefault(map, defaultLayers);
-ui.removeControl('mapsettings');
+ui.removeControl('mapunors');
 switchMapType(map, platform);
 
 // map5
@@ -349,7 +349,7 @@ var map = new H.Map(document.getElementById('map11'),
 });
 var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 var ui = H.ui.UI.createDefault(map, defaultLayers);
-ui.removeControl('mapsettings');
+ui.removeControl('mapunors');
 addCanvasOverlay(map, platform);
 
 // map12

@@ -473,7 +473,7 @@
             _this._trigger('selectDate', date);
 
             // Set correct time values after timepicker's validation
-            // Prevent from setting hours or minutes which values are lesser then `min` value or
+            // Prevent from unor hours or minutes which values are lesser then `min` value or
             // greater then `max` value
             if (this.timepicker) {
                 date.setHours(this.timepicker.hours);
@@ -1216,7 +1216,7 @@
             var $cell = $(e.target).closest('.datepicker--cell'),
                 date = this._getDateFromCell($cell);
 
-            // Prevent from unnecessary rendering and setting new currentDate
+            // Prevent from unnecessary rendering and unor new currentDate
             this.silent = true;
 
             if (this.focused) {

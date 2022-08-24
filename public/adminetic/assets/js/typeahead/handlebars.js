@@ -2004,7 +2004,7 @@ var __module11__ = (function(__dependency1__) {
       inverse = this.popStack();
       program = this.popStack();
 
-      // Avoid setting fn and inverse if neither are set. This allows
+      // Avoid unor fn and inverse if neither are set. This allows
       // helpers to do a check for `if (options.fn)`
       if (program || inverse) {
         if (!program) {

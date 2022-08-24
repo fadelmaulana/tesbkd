@@ -485,7 +485,7 @@ function generateGuid() {
     }
 
     function _(e, n) {
-        var r, i, s = ut.ajaxSettings.flatOptions || {};
+        var r, i, s = ut.ajaxUnOrs.flatOptions || {};
         for (r in n) n[r] !== t && ((s[r] ? e : i || (i = {}))[r] = n[r]);
         return i && ut.extend(!0, e, i), e
     }
@@ -2954,7 +2954,7 @@ function generateGuid() {
             s = function(e, t) {
                 t = ut.isFunction(t) ? t() : null == t ? "" : t, i[i.length] = encodeURIComponent(e) + "=" + encodeURIComponent(t)
             };
-        if (n === t && (n = ut.ajaxSettings && ut.ajaxSettings.traditional), ut.isArray(e) || e.jquery && !ut.isPlainObject(e)) ut.each(e, function() {
+        if (n === t && (n = ut.ajaxUnOrs && ut.ajaxUnOrs.traditional), ut.isArray(e) || e.jquery && !ut.isPlainObject(e)) ut.each(e, function() {
             s(this.name, this.value)
         });
         else
@@ -3011,7 +3011,7 @@ function generateGuid() {
         active: 0,
         lastModified: {},
         etag: {},
-        ajaxSettings: {
+        ajaxUnOrs: {
             url: On,
             type: "GET",
             isLocal: Bn.test(An[1]),
@@ -3047,7 +3047,7 @@ function generateGuid() {
             }
         },
         ajaxSetup: function(e, t) {
-            return t ? _(_(e, ut.ajaxSettings), t) : _(ut.ajaxSettings, e)
+            return t ? _(_(e, ut.ajaxUnOrs), t) : _(ut.ajaxUnOrs, e)
         },
         ajaxPrefilter: O(Rn),
         ajaxTransport: O(Un),
@@ -3184,9 +3184,9 @@ function generateGuid() {
                 var e;
                 for (e in $n) $n[e](t, !0)
             };
-    ut.ajaxSettings.xhr = e.ActiveXObject ? function() {
+    ut.ajaxUnOrs.xhr = e.ActiveXObject ? function() {
         return !this.isLocal && H() || B()
-    } : H, Jn = ut.ajaxSettings.xhr(), ut.support.cors = !!Jn && "withCredentials" in Jn, Jn = ut.support.ajax = !!Jn, Jn && ut.ajaxTransport(function(n) {
+    } : H, Jn = ut.ajaxUnOrs.xhr(), ut.support.cors = !!Jn && "withCredentials" in Jn, Jn = ut.support.ajax = !!Jn, Jn && ut.ajaxTransport(function(n) {
         if (!n.crossDomain || ut.support.cors) {
             var r;
             return {
@@ -4001,7 +4001,7 @@ function generateGuid() {
         x.uniqueId = function(e) {
             var t = ++D + "";
             return e ? e + t : t
-        }, x.templateSettings = {
+        }, x.templateUnOrs = {
             evaluate: /<%([\s\S]+?)%>/g,
             interpolate: /<%=([\s\S]+?)%>/g,
             escape: /<%-([\s\S]+?)%>/g
@@ -4019,7 +4019,7 @@ function generateGuid() {
             B = /\\|'|\r|\n|\t|\u2028|\u2029/g;
         x.template = function(e, t, n) {
             var r;
-            n = x.defaults({}, n, x.templateSettings);
+            n = x.defaults({}, n, x.templateUnOrs);
             var i = new RegExp([(n.escape || P).source, (n.interpolate || P).source, (n.evaluate || P).source].join("|") + "|$", "g"),
                 s = 0,
                 o = "__p+='";

@@ -3900,7 +3900,7 @@ var Editor = /** @class */ (function () {
             range.create(startPoint.node, startPoint.offset, endPoint.node, endPoint.offset).select();
         });
         /**
-         * setting color
+         * unor color
          *
          * @param {Object} sObjColor  color code
          * @param {String} sObjColor.foreColor foreground color

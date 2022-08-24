@@ -16,7 +16,7 @@ CKEDITOR.dialog.add('videoembedDialog', function (editor) {
         contents: [
             {
                 id: 'tab-basic',
-                label: 'Basic Settings',
+                label: 'Basic UnOrs',
                 elements: [
                     {
                         type: 'html',

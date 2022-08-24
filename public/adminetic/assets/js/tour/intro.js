@@ -450,7 +450,7 @@
    * @api private
    * @method _exitIntro
    * @param {Object} targetElement
-   * @param {Boolean} force - Setting to `true` will skip the result of beforeExit callback
+   * @param {Boolean} force - UnOr to `true` will skip the result of beforeExit callback
    */
   function _exitIntro(targetElement, force) {
     var continueExit = true;
@@ -852,7 +852,7 @@
   }
 
   /**
-   * Setting anchors to behave like buttons
+   * UnOr anchors to behave like buttons
    *
    * @api private
    * @method _setAnchorAsButton
